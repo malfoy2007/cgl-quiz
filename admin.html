@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard - Quiz Results</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,Arial,sans-serif;}
+body{background:#f0f4fa;}
+header{background:#1a3c8f;color:#fff;padding:14px 22px;font-weight:700;font-size:18px;}
+.wrap{max-width:1000px;margin:24px auto;padding:0 16px;}
+.card{background:#fff;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.08);padding:26px;margin-bottom:16px;}
+input{padding:11px;border:2px solid #cdd6e4;border-radius:8px;font-size:15px;margin:6px 0;width:100%;}
+button{background:#2f5fd0;color:#fff;border:none;padding:11px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-size:15px;}
+button:hover{background:#1a3c8f;}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px;}
+th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;}
+th{background:#1a3c8f;color:#fff;position:sticky;top:0;}
+tr:hover td{background:#f6f9ff;}
+.rank{display:inline-block;min-width:26px;text-align:center;background:#e8effc;border-radius:6px;padding:2px 6px;font-weight:700;}
+.top3{background:gold!important;color:#333;}
+.top32{background:#dfe3e8!important;}
+.top33{background:#f0c060!important;}
+.score-pill{font-weight:800;color:#2e9e4f;}
+details td{font-size:13px;background:#fafbfe;}
+.muted{color:#888;font-size:13px;}
+h1{color:#1a3c8f;font-size:22px;margin-bottom:6px;}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.sumbox{background:#f6f9ff;border-radius:10px;padding:14px;text-align:center;}
+.sumbox b{display:block;font-size:22px;color:#1a3c8f;}
+.sumbox span{font-size:12px;color:#666;}
+.refresh{background:#2e9e4f;}
+@media(max-width:700px){.summary{grid-template-columns:repeat(2,1fr);}table{font-size:12px;}}
+</style>
+</head>
+<body>
+<header>📊 Teacher Dashboard — SSC CGL Quiz Results</header>
+<div class="wrap">
+
+  <div class="card" id="lockCard">
+    <h1>🔐 Enter Admin Passcode</h1>
+    <p class="muted">Default passcode: <b>parmar123</b> — change it in admin.html (ADMIN_CODE).</p>
+    <input type="password" id="pass" placeholder="Passcode">
+    <button onclick="unlock()">Unlock</button>
+    <p id="lockMsg" class="muted" style="color:#d33f3f;margin-top:8px;"></p>
+  </div>
+
+  <div class="card hidden" id="dash">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <div>
+        <h1>Leaderboard 🏆</h1>
+        <p class="muted">Live results — every student's submission appears here automatically.</p>
+      </div>
+      <button class="refresh" onclick="load()">↻ Refresh</button>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Rank</th><th>Name</th><th>Score</th><th>Correct</th><th>Wrong</th><th>Skipped</th><th>Date &amp; Time</th><th>Answers</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:10px;" id="countNote"></p>
+  </div>
+
+</div>
+<script>
+const ADMIN_CODE='parmar123'; /* ← change this passcode */
+let sb=null;
+try{ if(SUPABASE_URL&&!SUPABASE_URL.includes('YOUR_PROJECT')) sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY); }catch(e){}
+function unlock(){
+  if(document.getElementById('pass').value!==ADMIN_CODE){document.getElementById('lockMsg').textContent='Wrong passcode';return;}
+  if(!sb){document.getElementById('lockMsg').textContent='Supabase not configured — add your keys in supabase-config.js first.';return;}
+  document.getElementById('lockCard').classList.add('hidden');
+  document.getElementById('dash').classList.remove('hidden');
+  load();
+}
+async function load(){
+  const{data,error}=await sb.from('quiz_results').select('*').order('score',{ascending:false});
+  if(error){document.getElementById('rows').innerHTML='<tr><td colspan="8">Error: '+error.message+'</td></tr>';return;}
+  document.getElementById('countNote').textContent=data.length+' submission(s) • sorted by score (highest first)';
+  /* summary */
+  const attempted=data.length, avg=attempted?Math.round(data.reduce((s,r)=>s+r.score,0)/attempted*100)/100:0;
+  const top=data.length?data[0]:null;
+  document.getElementById('summary').innerHTML=
+    '<div class="sumbox"><b>'+attempted+'</b><span>Students Attempted</span></div>'+
+    '<div class="sumbox"><b>'+avg+'</b><span>Average Score</span></div>'+
+    '<div class="sumbox"><b>'+(top?top.score:'—')+'</b><span>Highest Score'+(top?' ('+top.name+')':'')+'</span></div>'+
+    '<div class="sumbox"><b>'+(top?top.total:'—')+'</b><span>Max Marks</span></div>';
+  /* rows */
+  const KEYS=['A','B','C','D'];
+  document.getElementById('rows').innerHTML=data.map((r,i)=>{
+    const ans=(r.answers||[]).map((a,qi)=>a===-1?'—':KEYS[a]).join(', ');
+    return '<tr><td><span class="rank '+(i<3?'top3 top3'+(i+1):'')+'">'+(i+1)+'</span></td>'+
+      '<td><b>'+esc(r.name)+'</b></td><td class="score-pill">'+r.score+' / '+r.total+'</td>'+
+      '<td style="color:#2e9e4f">'+r.correct+'</td><td style="color:#d33f3f">'+r.wrong+'</td><td>'+r.skipped+'</td>'+
+      '<td class="muted">'+new Date(r.created_at).toLocaleString()+'</td>'+
+      '<td><details><summary style="cursor:pointer;color:#2f5fd0;font-weight:700;">View</summary><div style="padding:8px 4px;max-width:340px;word-break:break-word">'+ans+'</div></details></td></tr>';
+  }).join('');
+}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+document.getElementById('pass').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+</script>
+</body>
+</html>
