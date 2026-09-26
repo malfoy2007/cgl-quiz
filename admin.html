@@ -40,7 +40,6 @@ h1{color:#1a3c8f;font-size:22px;margin-bottom:6px;}
 
   <div class="card" id="lockCard">
     <h1>🔐 Enter Admin Passcode</h1>
-    <p class="muted">Default passcode: <b>parmar123</b> — change it in admin.html (ADMIN_CODE).</p>
     <input type="password" id="pass" placeholder="Passcode">
     <button onclick="unlock()">Unlock</button>
     <p id="lockMsg" class="muted" style="color:#d33f3f;margin-top:8px;"></p>
@@ -66,7 +65,7 @@ h1{color:#1a3c8f;font-size:22px;margin-bottom:6px;}
 
 </div>
 <script>
-const ADMIN_CODE='parmar123'; /* ← change this passcode */
+const ADMIN_CODE='target2027'; /* ← change this passcode */
 let sb=null;
 try{ if(SUPABASE_URL&&!SUPABASE_URL.includes('YOUR_PROJECT')) sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY); }catch(e){}
 function unlock(){
