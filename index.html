@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSC CGL Daily Mock Test</title>
+<style>
+:root{
+  --blue:#1f5fbf; --blue2:#164a98; --bg:#f3f6fb; --card:#fff;
+  --text:#1f2937; --muted:#6b7280; --border:#d9e0ea;
+  --green:#16834b; --red:#d63b3b; --orange:#d98216; --purple:#6941c6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+button,input{font:inherit}
+.top{background:#fff;border-bottom:1px solid #d9dee8;position:sticky;top:0;z-index:10}
+.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;max-width:1400px;margin:auto}
+.logo{font-weight:800;color:var(--blue);font-size:20px}
+.logo small{display:block;font-size:10px;color:#6b7280;letter-spacing:1px}
+.timer{font-weight:800;background:#fff3cd;color:#8a5a00;border:1px solid #f0d58a;border-radius:5px;padding:10px 16px;min-width:105px;text-align:center}
+.timer.danger{background:#ffe4e4;color:#b42318}
+.wrap{max-width:1400px;margin:18px auto;padding:0 18px}
+.screen{display:none}.screen.active{display:block}
+.start{max-width:650px;margin:50px auto;background:#fff;border:1px solid var(--border);border-radius:10px;padding:32px;box-shadow:0 4px 18px #10204010}
+.start h1{margin-top:0}.field{margin:18px 0}.field label{display:block;font-weight:700;margin-bottom:7px}
+.field input,.field select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:6px}
+.primary{background:var(--blue);color:#fff;border:0;padding:13px 22px;border-radius:5px;font-weight:700;cursor:pointer}
+.primary:hover{background:var(--blue2)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:7px}
+.examhead{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.subject{font-weight:800}.marks{font-size:13px;color:#555}
+.qbox{padding:22px 25px;min-height:420px}
+.qnum{font-weight:800;margin-bottom:18px;color:#26364d}
+.question{font-size:18px;line-height:1.6;white-space:pre-line}
+.option{display:flex;gap:12px;align-items:flex-start;border:1px solid #d8dee8;border-radius:5px;padding:13px;margin:11px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f7faff;border-color:#91b5e8}
+.option input{margin-top:4px}
+.actions{border-top:1px solid var(--border);padding:13px 18px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 14px;border:1px solid #bcc7d6;background:#fff;border-radius:5px;cursor:pointer;font-weight:700}
+.btn.save{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.review{background:#fff5df;color:#855500;border-color:#e7c37c}
+.btn.submit{background:#16834b;color:#fff;border-color:#16834b}
+.palette{padding:17px}
+.palette h3{margin:0 0 12px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pbtn{height:38px;border:1px solid #cbd5e1;background:#fff;border-radius:4px;cursor:pointer;font-weight:700}
+.pbtn.current{border:2px solid var(--blue)}
+.pbtn.answered{background:#dff4e8;color:#12653a;border-color:#8ed1a9}
+.pbtn.review{background:#fff0c7;color:#875700;border-color:#e3bd61}
+.pbtn.answered.review{background:#eadfff;color:#5c3b9e;border-color:#b6a0e5}
+.legend{font-size:12px;line-height:1.8;color:#666;margin-top:14px}
+.dot{display:inline-block;width:12px;height:12px;border:1px solid #bbb;vertical-align:-1px;margin-right:4px}
+.d1{background:#dff4e8}.d2{background:#fff0c7}.d3{background:#eadfff}
+.progress{height:5px;background:#e7ebf1}.progress i{display:block;height:100%;background:var(--blue);width:0}
+.result{max-width:900px;margin:25px auto}.scorecard{background:#fff;border:1px solid var(--border);padding:25px;border-radius:8px;text-align:center}
+.score{font-size:46px;font-weight:900;color:var(--blue)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.stat{border:1px solid var(--border);padding:15px;border-radius:6px}.stat b{display:block;font-size:22px}
+.reviewcard{margin-top:14px;background:#fff;border:1px solid var(--border);padding:18px;border-radius:7px}
+.correct{border-left:5px solid var(--green)}.wrong{border-left:5px solid var(--red)}.unanswered{border-left:5px solid #888}
+.dashboard{max-width:1100px;margin:25px auto}.dashboard h1{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border)}
+th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left}th{background:#f1f4f8}
+.muted{color:var(--muted);font-size:13px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.qbox{min-height:auto}.stats{grid-template-columns:repeat(2,1fr)}.topbar{padding:0 12px}.wrap{padding:0 9px}}
+</style>
+</head>
+<body>
+<div class="top">
+ <div class="topbar">
+   <div class="logo">SSC CGL <small>DAILY MOCK TEST</small></div>
+   <div id="timer" class="timer">15:00</div>
+ </div>
+ <div class="progress"><i id="progress"></i></div>
+</div>
+
+<div class="wrap">
+<section id="startScreen" class="screen active">
+ <div class="start">
+  <h1>SSC CGL Daily Mock Test</h1>
+  <p class="muted">Exam-style one-question interface • 15 minutes • +1 / −0.25</p>
+  <div class="field"><label>Candidate Name</label><input id="candidateName" placeholder="Enter your name"></div>
+  <div class="field"><label>Language</label><select id="language"><option value="en">English</option><option value="hi">हिन्दी</option></select></div>
+  <button class="primary" onclick="startQuiz()">Start Test</button>
+  <button class="btn" style="margin-left:7px" onclick="showDashboard()">View Results</button>
+ </div>
+</section>
+
+<section id="quizScreen" class="screen">
+ <div class="layout">
+  <main class="panel">
+   <div class="examhead"><span class="subject">General Awareness</span><span class="marks">Each question: <b>+1</b> | Wrong: <b>−0.25</b></span></div>
+   <div class="qbox">
+    <div id="qnum" class="qnum"></div>
+    <div id="question" class="question"></div>
+    <div id="options"></div>
+   </div>
+   <div class="actions">
+    <div>
+      <button class="btn" onclick="prevQuestion()">Previous</button>
+      <button class="btn review" onclick="toggleReview()">Mark for Review</button>
+      <button class="btn" onclick="clearAnswer()">Clear</button>
+    </div>
+    <div>
+      <button class="btn save" onclick="saveNext()">Save & Next</button>
+      <button class="btn submit" onclick="confirmSubmit()">Submit Test</button>
+    </div>
+   </div>
+  </main>
+  <aside class="panel">
+   <div class="palette">
+    <h3>Question Palette</h3>
+    <div id="palette" class="grid"></div>
+    <div class="legend">
+      <span class="dot d1"></span>Answered &nbsp;
+      <span class="dot d2"></span>Marked for review<br>
+      <span class="dot d3"></span>Answered + review
+    </div>
+    <hr>
+    <div id="candidateBox" class="muted"></div>
+   </div>
+  </aside>
+ </div>
+</section>
+
+<section id="resultScreen" class="screen">
+ <div class="result">
+  <div class="scorecard">
+   <h1>Test Submitted</h1>
+   <div id="resultName"></div>
+   <div class="score" id="finalScore">0</div>
+   <div id="percentage"></div>
+   <div class="stats">
+    <div class="stat"><b id="correctCount">0</b>Correct</div>
+    <div class="stat"><b id="wrongCount">0</b>Wrong</div>
+    <div class="stat"><b id="skipCount">0</b>Unanswered</div>
+    <div class="stat"><b id="timeUsed">0</b>Time Used</div>
+   </div>
+   <div style="margin-top:20px">
+    <button class="primary" onclick="showDashboard()">Organizer Results</button>
+    <button class="btn" onclick="location.reload()">New Test</button>
+   </div>
+  </div>
+  <div id="answerReview"></div>
+ </div>
+</section>
+
+<section id="dashboardScreen" class="screen">
+ <div class="dashboard">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+   <div><h1>Organizer Result Dashboard</h1><p class="muted">Results are stored in this browser.</p></div>
+   <button class="btn" onclick="location.reload()">Back</button>
+  </div>
+  <div class="panel" style="overflow:auto">
+   <table>
+    <thead><tr><th>#</th><th>Candidate</th><th>Score</th><th>Correct</th><th>Wrong</th><th>Unanswered</th><th>%</th><th>Date</th></tr></thead>
+    <tbody id="resultsBody"></tbody>
+   </table>
+  </div>
+  <div style="margin-top:12px"><button class="btn" onclick="exportResults()">Download Results CSV</button> <button class="btn" onclick="clearResults()">Clear Local Results</button></div>
+ </div>
+</section>
+</div>
+
+<script src="questions.js"></script>
+<script>
+let current=0, answers=[], marked=[], started=false, submitted=false;
+let seconds=15*60, timerHandle=null, candidate="", lang="en", startStamp=0;
+
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active")}
+
+function startQuiz(){
+ candidate=$("candidateName").value.trim()||"Candidate";
+ lang=$("language").value;
+ current=0; answers=Array(QUESTIONS.length).fill(null); marked=Array(QUESTIONS.length).fill(false);
+ seconds=15*60; startStamp=Date.now(); started=true; submitted=false;
+ $("candidateBox").innerHTML="<b>"+escapeHtml(candidate)+"</b><br>"+QUESTIONS.length+" Questions";
+ show("quizScreen"); render();
+ clearInterval(timerHandle); timerHandle=setInterval(tick,1000);
+}
+function tick(){
+ seconds--;
+ if(seconds<=0){seconds=0; updateTimer(); submitQuiz(true); return}
+ updateTimer();
+}
+function updateTimer(){
+ let m=Math.floor(seconds/60), s=seconds%60;
+ $("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ $("timer").classList.toggle("danger",seconds<=120);
+}
+function render(){
+ const q=QUESTIONS[current];
+ $("qnum").textContent="Question "+(current+1)+" of "+QUESTIONS.length;
+ $("question").textContent=lang==="hi"?q.hi:q.q;
+ $("options").innerHTML="";
+ const opts=lang==="hi"?q.oh:q.o;
+ opts.forEach((op,i)=>{
+  const label=document.createElement("label"); label.className="option";
+  label.innerHTML="<input type='radio' name='opt' value='"+i+"'> <span>"+escapeHtml(op)+"</span>";
+  const radio=label.querySelector("input"); radio.checked=answers[current]===i;
+  radio.onchange=()=>answers[current]=i;
+  $("options").appendChild(label);
+ });
+ $("progress").style.width=((current+1)/QUESTIONS.length*100)+"%";
+ renderPalette(); updateTimer();
+}
+function renderPalette(){
+ $("palette").innerHTML="";
+ QUESTIONS.forEach((_,i)=>{
+  const b=document.createElement("button"); b.className="pbtn";
+  if(i===current)b.classList.add("current");
+  if(answers[i]!==null)b.classList.add("answered");
+  if(marked[i])b.classList.add("review");
+  b.textContent=i+1; b.onclick=()=>{current=i;render()};
+  $("palette").appendChild(b);
+ });
+}
+function saveNext(){
+ if(current<QUESTIONS.length-1){current++;render()} else confirmSubmit();
+}
+function prevQuestion(){if(current>0){current--;render()}}
+function clearAnswer(){answers[current]=null;render()}
+function toggleReview(){
+ marked[current]=!marked[current]; render();
+}
+function confirmSubmit(){
+ if(confirm("Submit the test now? You will not be able to change your answers.")) submitQuiz(false);
+}
+function submitQuiz(auto){
+ if(submitted)return; submitted=true; clearInterval(timerHandle);
+ let correct=0,wrong=0,skip=0;
+ QUESTIONS.forEach((q,i)=>{
+   if(answers[i]===null)skip++;
+   else if(answers[i]===q.a)correct++; else wrong++;
+ });
+ const score=correct-(wrong*.25), pct=(score/QUESTIONS.length*100);
+ const used=15*60-seconds;
+ const result={
+   name:candidate, score:+score.toFixed(2), correct, wrong, skip,
+   percentage:+pct.toFixed(2), timeUsed:formatTime(used),
+   date:new Date().toLocaleString(), language:lang
+ };
+ saveResult(result);
+ $("finalScore").textContent=result.score+" / "+QUESTIONS.length;
+ $("percentage").textContent=result.percentage+"%";
+ $("correctCount").textContent=correct;
+ $("wrongCount").textContent=wrong;
+ $("skipCount").textContent=skip;
+ $("timeUsed").textContent=result.timeUsed;
+ $("resultName").textContent=candidate+(auto?" • Time Up":"");
+ buildReview();
+ show("resultScreen");
+ $("timer").textContent="00:00";
+}
+function buildReview(){
+ $("answerReview").innerHTML="<h2>Answer Review</h2>";
+ QUESTIONS.forEach((q,i)=>{
+  const state=answers[i]===null?"unanswered":answers[i]===q.a?"correct":"wrong";
+  const box=document.createElement("div");box.className="reviewcard "+state;
+  const opts=lang==="hi"?q.oh:q.o;
+  box.innerHTML="<b>Q"+(i+1)+".</b> "+escapeHtml(lang==="hi"?q.hi:q.q).replace(/\n/g,"<br>")+
+   "<p><b>Your answer:</b> "+(answers[i]===null?"Not answered":escapeHtml(opts[answers[i]]))+
+   "<br><b>Correct answer:</b> "+escapeHtml(opts[q.a])+
+   "<br><span class='muted'>"+escapeHtml(q.e||"")+"</span></p>";
+  $("answerReview").appendChild(box);
+ });
+}
+function getResults(){return JSON.parse(localStorage.getItem("sscCglResults")||"[]")}
+function saveResult(r){const a=getResults();a.push(r);localStorage.setItem("sscCglResults",JSON.stringify(a))}
+function showDashboard(){
+ const a=getResults().slice().reverse(); $("resultsBody").innerHTML="";
+ if(!a.length){$("resultsBody").innerHTML="<tr><td colspan='8'>No results yet.</td></tr>"}
+ a.forEach((r,i)=>{
+  $("resultsBody").innerHTML+=`<tr><td>${i+1}</td><td>${escapeHtml(r.name)}</td><td><b>${r.score}</b></td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.skip}</td><td>${r.percentage}%</td><td>${escapeHtml(r.date)}</td></tr>`;
+ });
+ show("dashboardScreen");
+}
+function exportResults(){
+ const a=getResults(); if(!a.length){alert("No results to export.");return}
+ const head=["Candidate","Score","Correct","Wrong","Unanswered","Percentage","Time Used","Date"];
+ const rows=a.map(r=>[r.name,r.score,r.correct,r.wrong,r.skip,r.percentage,r.timeUsed,r.date]);
+ const csv=[head,...rows].map(row=>row.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob),ael=document.createElement("a");
+ ael.href=url;ael.download="ssc-cgl-results.csv";ael.click();URL.revokeObjectURL(url);
+}
+function clearResults(){if(confirm("Delete all results from this browser?")){localStorage.removeItem("sscCglResults");showDashboard()}}
+function formatTime(s){return Math.floor(s/60)+"m "+(s%60)+"s"}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+</script>
+</body>
+</html>
