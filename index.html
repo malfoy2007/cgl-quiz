@@ -1,171 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SSC CGL Mock Test - Geography</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="questions.js"></script>
+<title>PARMAR SSC - Geography Bilingual Mock Test (Lecture 7 PYQ) - 100 Questions</title>
 <style>
-:root{--blue:#1a3c8f;--blue2:#2f5fd0;--green:#2e9e4f;--red:#d33f3f;--purple:#8e44ad;--notans:#e0e0e0;--amber:#f39c12;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,Arial,sans-serif;}
-body{background:#f0f4fa;color:#222;}
-.hidden{display:none!important;}
-/* header */
-header{background:var(--blue);color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:50;}
-header .logo{font-weight:700;font-size:18px;}
-.timer{background:#c62828;padding:6px 16px;border-radius:6px;font-weight:700;font-size:18px;font-variant-numeric:tabular-nums;}
-.langbtn{background:#fff;color:var(--blue);border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-weight:600;}
-/* screens */
-.screen{max-width:1000px;margin:24px auto;padding:0 16px;}
-.card{background:#fff;border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.08);padding:28px;}
-h1{font-size:26px;color:var(--blue);margin-bottom:8px;}
-.muted{color:#666;font-size:14px;}
-input[type=text]{width:100%;padding:12px;border:2px solid #cdd6e4;border-radius:8px;font-size:16px;margin:10px 0;}
-input[type=text]:focus{outline:none;border-color:var(--blue2);}
+:root{--pri:#1a3c8f;--pri2:#2b5fd9;--acc:#e63946;--gold:#ffb703;--ok:#2a9d8f;--bad:#e63946;--bg:#f4f6fb;--card:#ffffff;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;}
+body{background:var(--bg);color:#222;}
+.topbar{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.topbar h1{font-size:18px;}
+.lang-toggle{background:#fff;color:var(--pri);border:none;border-radius:20px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:13px;}
+.timer{background:var(--acc);padding:6px 16px;border-radius:20px;font-weight:700;font-size:16px;min-width:90px;text-align:center;}
+.timer.low{background:#c1121f;animation:blink 1s infinite;}
+@keyframes blink{50%{opacity:.55;}}
+.wrap{max-width:1200px;margin:20px auto;padding:0 15px;display:flex;gap:20px;align-items:flex-start;}
+.main{flex:1;background:var(--card);border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.08);}
+.side{width:280px;flex-shrink:0;background:var(--card);border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.08);position:sticky;top:80px;}
+.sec-tag{display:inline-block;background:#eef3ff;color:var(--pri);padding:3px 12px;border-radius:12px;font-size:12px;font-weight:700;margin-bottom:10px;}
+.stmt-tag{display:inline-block;background:#fff3cd;color:#8a6d00;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-left:6px;}
+.qtext{font-size:17px;line-height:1.7;margin-bottom:8px;font-weight:600;}
+.qtext-en{font-size:14.5px;line-height:1.6;color:#4a5568;margin-bottom:18px;font-weight:500;border-left:3px solid var(--gold);padding-left:12px;font-style:italic;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid #e3e8f4;border-radius:10px;padding:11px 14px;cursor:pointer;transition:.15s;background:#fbfcff;}
+.opt:hover{border-color:var(--pri2);background:#eef3ff;}
+.opt input{margin-top:4px;accent-color:var(--pri2);}
+.opt.sel{border-color:var(--pri2);background:#dbe7ff;}
+.op-hi{display:block;font-size:15px;}
+.op-en{display:block;font-size:12.5px;color:#5a6b8c;margin-top:2px;font-style:italic;}
+body.en-only .qtext-en,body.en-only .op-hi{display:none;}
+body.hi-only .qtext-en,body.hi-only .op-en{display:none;}
+.nav{display:flex;justify-content:space-between;margin-top:24px;gap:10px;flex-wrap:wrap;}
 .btn{border:none;border-radius:8px;padding:12px 26px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;}
-.btn-primary{background:var(--blue2);color:#fff;}
-.btn-primary:hover{background:var(--blue);}
-.btn-green{background:var(--green);color:#fff;}
-.btn-amber{background:var(--amber);color:#fff;}
-.btn-grey{background:#e9edf3;color:#333;}
-.btn-purple{background:var(--purple);color:#fff;}
-.btn-red{background:var(--red);color:#fff;}
-.btn:disabled{opacity:.5;cursor:not-allowed;}
-/* quiz layout */
-.quiz-wrap{display:flex;gap:16px;margin:16px auto;max-width:1200px;padding:0 12px;}
-.q-panel{flex:1;background:#fff;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.07);padding:20px;min-height:420px;display:flex;flex-direction:column;}
-.q-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #eef2f8;padding-bottom:10px;margin-bottom:14px;}
-.q-head .qnum{font-weight:700;color:var(--blue);font-size:16px;}
-.markbadge{background:#fdf0d5;color:#8a6d1a;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;}
-.q-text{font-size:17px;line-height:1.55;margin-bottom:16px;}
-.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border:2px solid #dbe2ee;border-radius:8px;background:#fafbfe;cursor:pointer;font-size:15px;}
-.opt:hover{border-color:var(--blue2);}
-.opt.sel{border-color:var(--blue2);background:#e8effc;font-weight:600;}
-.opt .key{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:#dbe2ee;margin-right:10px;font-weight:700;}
-.opt.sel .key{background:var(--blue2);color:#fff;}
-.q-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:16px;border-top:1px solid #eef2f8;}
-/* palette */
-.palette{width:270px;background:#fff;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.07);padding:16px;align-self:flex-start;position:sticky;top:70px;}
-.palette h3{font-size:14px;color:var(--blue);margin-bottom:10px;}
-.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;margin-bottom:12px;color:#444;}
-.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:middle;}
-.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-height:300px;overflow-y:auto;padding:4px;}
-.pnum{border:none;border-radius:6px;padding:8px 0;font-weight:700;cursor:pointer;font-size:13px;background:#e8ecf3;color:#555;}
-.pnum.current{outline:3px solid var(--blue2);}
-.pnum.ans{background:var(--green);color:#fff;}
-.pnum.notans{background:var(--red);color:#fff;}
-.pnum.marked{background:var(--purple);color:#fff;}
-.pnum.ansmarked{background:var(--blue2);color:#fff;}
-/* modal */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:100;}
-.modal{background:#fff;border-radius:12px;padding:26px;width:90%;max-width:440px;}
-.modal h2{color:var(--blue);margin-bottom:10px;}
-.sumrow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #ddd;font-size:14px;}
-/* result */
-.score-big{font-size:54px;font-weight:800;color:var(--blue);text-align:center;}
-.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0;}
-.stat{background:#f6f9ff;border-radius:10px;padding:14px;text-align:center;}
-.stat b{display:block;font-size:24px;}
-.stat span{font-size:12px;color:#666;}
-.review-q{border:1px solid #e2e8f2;border-radius:8px;padding:14px;margin:10px 0;}
-.review-q .correct{color:var(--green);font-weight:700;}
-.review-q .wrong-a{color:var(--red);font-weight:700;}
-.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;margin-left:8px;}
-.tag.ok{background:#e5f6ea;color:var(--green);}
-.tag.bad{background:#fdeaea;color:var(--red);}
-.tag.skip{background:#f0f0f0;color:#777;}
-table{width:100%;border-collapse:collapse;font-size:14px;}
-th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:left;}
-th{background:var(--blue);color:#fff;}
-@media(max-width:860px){.quiz-wrap{flex-direction:column;}.palette{width:100%;position:static;}.statgrid{grid-template-columns:repeat(2,1fr);}}
+.btn-p{background:var(--pri2);color:#fff;}
+.btn-p:hover{background:var(--pri);}
+.btn-g{background:#e9edf5;color:#333;}
+.btn-s{background:var(--acc);color:#fff;font-size:16px;padding:14px 34px;}
+.pal-head{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:10px;}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;margin-bottom:12px;}
+.lg{display:flex;align-items:center;gap:4px;}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block;}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-height:320px;overflow-y:auto;}
+.pbtn{border:1.5px solid #ccd6ea;background:#fff;border-radius:6px;padding:7px 0;font-size:12px;font-weight:700;cursor:pointer;color:#333;}
+.pbtn.ans{background:var(--ok);border-color:var(--ok);color:#fff;}
+.pbtn.cur{outline:3px solid var(--gold);}
+.progress{height:8px;background:#e9edf5;border-radius:5px;margin:8px 0 14px;overflow:hidden;}
+.progress div{height:100%;background:var(--ok);width:0%;transition:.3s;}
+.start{max-width:640px;margin:40px auto;background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 24px rgba(0,0,0,.1);text-align:center;}
+.start h1{color:var(--pri);margin-bottom:6px;}
+.start h2{font-size:18px;color:var(--acc);margin-bottom:20px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;text-align:left;}
+.info{background:#f0f4ff;border-radius:10px;padding:12px 14px;font-size:14px;}
+.info b{color:var(--pri);}
+input[type=text]{width:100%;padding:13px 16px;border:2px solid #ccd6ea;border-radius:10px;font-size:16px;margin-bottom:16px;}
+input[type=text]:focus{outline:none;border-color:var(--pri2);}
+.res{max-width:760px;margin:30px auto;background:#fff;border-radius:16px;padding:34px;box-shadow:0 4px 24px rgba(0,0,0,.1);}
+.res h1{text-align:center;color:var(--pri);margin-bottom:4px;}
+.res .sub{text-align:center;color:#666;margin-bottom:22px;}
+.score-ring{width:170px;height:170px;border-radius:50%;margin:0 auto 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:800;}
+.score-ring .big{font-size:38px;}
+.score-ring .sm{font-size:13px;font-weight:600;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.stat{border-radius:10px;padding:14px;text-align:center;color:#fff;}
+.stat .n{font-size:26px;font-weight:800;}
+.stat .l{font-size:12px;opacity:.95;}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;}
+th{background:var(--pri);color:#fff;padding:10px;}
+td{padding:9px 10px;border-bottom:1px solid #e3e8f4;text-align:center;}
+tr:nth-child(even) td{background:#f7f9fe;}
+tr.me td{background:#fff3cd;font-weight:700;}
+.rank1{color:#b8860b;font-weight:800;}
+.hidden{display:none;}
+.review-q{border:1px solid #e3e8f4;border-radius:10px;padding:14px;margin-bottom:12px;font-size:14px;}
+.review-q .ok{color:var(--ok);font-weight:700;}
+.review-q .bad{color:var(--bad);font-weight:700;}
+.review-q .ca{color:#555;font-weight:600;}
+.verdict{text-align:center;font-size:17px;font-weight:700;color:var(--pri);margin-bottom:18px;}
+@media(max-width:900px){.wrap{flex-direction:column-reverse;}.side{width:100%;position:static;}.stats{grid-template-columns:repeat(2,1fr);}.info-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">🎯 SSC CGL Mock Test &nbsp;|&nbsp; <span id="hdrName"></span></div>
-  <div>
-    <span class="timer notranslate" id="timer">15:00</span>
-    <button class="langbtn" onclick="setLang('en')">English</button>
-    <button class="langbtn" onclick="setLang('hi')">हिंदी</button>
-  </div>
-</header>
-<div id="google_translate_element" style="display:none"></div>
-
-<!-- ============ SCREEN 1 : LOGIN ============ -->
-<div class="screen" id="scr-login">
-  <div class="card" style="max-width:480px;margin:40px auto;text-align:center;">
-    <h1>SSC CGL Geography Mock</h1>
-    <p class="muted">55 Questions &nbsp;•&nbsp; +2 Marks each &nbsp;•&nbsp; −0.25 negative &nbsp;•&nbsp; 15 Minutes</p>
-    <input type="text" id="studentName" maxlength="40" placeholder="Enter your full name">
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <button class="btn btn-primary" onclick="startQuiz()">Start Test ➜</button>
-    </div>
-    <p class="muted" style="margin-top:14px;">🔒 Your name &amp; score will be saved so your teacher can view the leaderboard.</p>
+<div class="topbar">
+  <h1>🌏 PARMAR SSC · Geography Bilingual Mock Test (Lecture 7)</h1>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="lang-toggle" id="langBtn" onclick="toggleLang()">🌐 EN</button>
+    <div class="timer hidden" id="timer">60:00</div>
   </div>
 </div>
 
-<!-- ============ SCREEN 2 : INSTRUCTIONS ============ -->
-<div class="screen hidden" id="scr-inst">
-  <div class="card">
-    <h1>Instructions</h1>
-    <ol style="margin:14px 0 14px 22px;line-height:1.9;font-size:15px;">
-      <li>Total <b>55 questions</b>, time <b>15 minutes</b>. Timer auto-submits the test.</li>
-      <li>Each correct answer: <b>+2 marks</b>; wrong answer: <b>−0.25 marks</b>; unattempted: 0.</li>
-      <li><b>Save &amp; Next</b> stores your answer. <b>Mark for Review</b> lets you revisit later.</li>
-      <li>The <b>Question Palette</b> (right side) shows status of every question — click any number to jump.</li>
-      <li>Click <b>Submit</b> to finish, then see your score with full solutions.</li>
-      <li>Use the <b>हिंदी</b> / <b>English</b> buttons to translate the entire test.</li>
-    </ol>
-    <label style="font-size:14px;display:block;margin-bottom:14px;"><input type="checkbox" id="agree"> I have read the instructions</label>
-    <button class="btn btn-green" id="btnBegin" disabled onclick="beginTest()">Begin Test ▶</button>
+<div class="start" id="startScreen">
+  <h1>SSC PATTERN BILINGUAL MOCK TEST<br><span style="font-size:16px;color:#666">द्विभाषी मॉक टेस्ट (हिंदी + English)</span></h1>
+  <h2>भूगोल · PYQ Series 6 · Lecture 7 · Geography</h2>
+  <div class="info-grid">
+    <div class="info">📋 <b>कुल प्रश्न / Questions:</b> 100 (34 statement-based)</div>
+    <div class="info">⏱️ <b>समय / Time:</b> 60 min</div>
+    <div class="info">✅ <b>सही / Correct:</b> +2 marks</div>
+    <div class="info">❌ <b>गलत / Wrong:</b> −0.50 (negative)</div>
+    <div class="info">🌐 <b>भाषा / Medium:</b> हिंदी + English (toggle ऊपर)</div>
+    <div class="info">📊 <b>परिणाम / Result:</b> Score + Leaderboard 🏆</div>
   </div>
+  <input type="text" id="studentName" placeholder="✍️ अपना नाम लिखें / Enter your name" maxlength="30">
+  <button class="btn btn-p" style="width:100%;font-size:18px;padding:15px" onclick="startTest()">🚀 TEST शुरू करें / Start Test</button>
 </div>
 
-<!-- ============ SCREEN 3 : QUIZ ============ -->
-<div class="quiz-wrap hidden" id="scr-quiz">
-  <div class="q-panel">
-    <div class="q-head">
-      <span class="qnum" id="qNum">Question 1 of 55</span>
-      <span class="markbadge hidden" id="mkBadge">★ Marked for Review</span>
-    </div>
-    <div class="q-text" id="qText"></div>
-    <div id="qOpts"></div>
-    <div class="q-actions">
-      <button class="btn btn-primary" onclick="saveNext()">Save &amp; Next</button>
-      <button class="btn btn-purple" onclick="markReview()">Mark for Review &amp; Next</button>
-      <button class="btn btn-amber" onclick="clearResp()">Clear Response</button>
-      <button class="btn btn-red" style="margin-left:auto" onclick="askSubmit()">Submit Test</button>
+<div class="wrap hidden" id="testScreen">
+  <div class="main">
+    <span class="sec-tag" id="secTag"></span><span class="stmt-tag hidden" id="stmtTag">📌 Statement Based</span>
+    <div class="qtext" id="qText"></div>
+    <div class="qtext-en" id="qTextEn"></div>
+    <div class="opts" id="opts"></div>
+    <div class="nav">
+      <button class="btn btn-g" id="prevBtn" onclick="go(-1)">← पिछला / Prev</button>
+      <button class="btn btn-g" onclick="clearOpt()">✖ Clear</button>
+      <button class="btn btn-p" id="nextBtn" onclick="go(1)">अगला / Next →</button>
     </div>
   </div>
-  <div class="palette">
-    <h3>Question Palette</h3>
+  <div class="side">
+    <div class="pal-head"><span id="palName">Student</span><span id="palCount">0/100</span></div>
+    <div class="progress"><div id="prog"></div></div>
     <div class="legend">
-      <span><i class="dot" style="background:var(--green)"></i>Answered</span>
-      <span><i class="dot" style="background:var(--red)"></i>Not Answered</span>
-      <span><i class="dot" style="background:var(--purple)"></i>Marked</span>
-      <span><i class="dot" style="background:#e8ecf3"></i>Not Visited</span>
-      <span><i class="dot" style="background:var(--blue2)"></i>Ans &amp; Marked</span>
-      <span><i class="dot" style="background:#c62828"></i>Time Left</span>
+      <span class="lg"><span class="dot" style="background:#2a9d8f"></span>Answered</span>
+      <span class="lg"><span class="dot" style="background:#fff;border:1.5px solid #ccd6ea"></span>Pending</span>
     </div>
-    <div class="pgrid" id="pGrid"></div>
-    <div style="margin-top:12px;font-size:13px;color:#555;" id="pSummary"></div>
+    <div class="palette" id="palette"></div>
+    <button class="btn btn-s" style="width:100%;margin-top:16px" onclick="submitTest()">SUBMIT ✔</button>
   </div>
 </div>
 
-<!-- ============ SCREEN 4 : RESULT ============ -->
-<div class="screen hidden" id="scr-result">
-  <div class="card" style="text-align:center;">
-    <h1 id="resTitle">Result</h1>
-    <p class="muted" id="resSub"></p>
-    <div class="score-big" id="resScore">0</div>
-    <p class="muted">out of <span id="resTotal">110</span> marks</p>
-    <div class="statgrid">
-      <div class="stat"><b style="color:var(--green)" id="stCorrect">0</b><span>Correct</span></div>
-      <div class="stat"><b style="color:var(--red)" id="stWrong">0</b><span>Wrong</span></div>
-      <div class="stat"><b style="color:#777" id="stSkip">0</b><span>Skipped</span></div>
+<div class="res hidden" id="resultScreen">
+  <h1>📊 RESULT / परिणाम</h1>
+  <div class="sub" id="resName"></div>
+  <div class="score-ring" id="scoreRing"><div class="big" id="scoreNum"></div><div class="sm" id="scoreOutOf"></div></div>
+  <div class="stats" id="statsRow"></div>
+  <h2 style="color:var(--pri);margin:6px 0 4px">🏆 Leaderboard / लीडरबोर्ड (सभी students · इस device पर)</h2>
+  <table id="lbTable"></table>
+  <div style="text-align:center;margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-p" onclick="location.reload()">🔄 नया Test / New Test</button>
+    <button class="btn btn-g" onclick="toggleReview()" id="revBtn">📖 Answer Review / उत्तर समीक्षा</button>
+  </div>
+  <div id="review" class="hidden" style="margin-top:24px"></div>
+</div>
+
+<script>
+const QS = [{"q": "पृथ्वी की कौन सी परत संवहन धाराओं के माध्यम से प्लेटों की गति के लिए जिम्मेदार है?", "o": ["भूपर्पटी (Crust)", "मेंटल (Mantle)", "बाह्य कोर", "आंतरिक कोर"], "a": 1, "s": 0, "qe": "Which layer of the Earth is responsible for the movement of plates through convection currents?", "oe": ["Crust", "Mantle", "Outer Core", "Inner Core"]}, {"q": "कथन 1: भूपर्पटी सियाल (Sial) से बनी होती है।<br>कथन 2: भूपर्पटी की मोटाई समुद्र तल पर 5-70 किमी होती है।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 2, "s": 1, "qe": "Statement 1: The Crust is made up of Sial.<br>Statement 2: The thickness of the Crust below sea level is 5-70 km.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "कथन 1: आंतरिक कोर ठोस रूप में होता है और इसकी मोटाई लगभग 2200 किमी है।<br>कथन 2: बाह्य कोर द्रव रूप में होता है और चुंबकीय गुण प्रदर्शित करता है।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 2, "s": 1, "qe": "Statement 1: The Inner Core is in solid state with a thickness of about 2200 km.<br>Statement 2: The Outer Core is in liquid state and exhibits magnetic properties.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "दुर्बलतामंडल (Asthenosphere) किसे संदर्भित करता है?", "o": ["पृथ्वी की बाह्यतम ठोस परत", "पृथ्वी के ऊपरी मेंटल की अर्ध-ठोस/अर्ध-द्रव परत", "कोर की ठोस परत", "क्रस्ट की निचली परत"], "a": 1, "s": 0, "qe": "The Asthenosphere refers to?", "oe": ["The outermost solid layer of the Earth", "The semi-solid/semi-liquid layer of the upper Mantle", "The solid layer of the Core", "The lower layer of the Crust"]}, {"q": "संवहन धारा सिद्धांत (Convection Current Theory) किसने दिया था?", "o": ["मैकेंजी और पार्कर", "आर्थर होम्स", "वेगनर", "रिचटर"], "a": 1, "s": 0, "qe": "Who proposed the Convection Current Theory?", "oe": ["McKenzie and Parker", "Arthur Holmes", "Wegener", "Richter"]}, {"q": "किन दो विवर्तनिक प्लेटों के टकराव के कारण हिमालय का निर्माण हुआ?", "o": ["भारतीय और यूरेशियन", "भारतीय और अफ्रीकी", "यूरेशियन और ऑस्ट्रेलियाई", "प्रशांत और यूरेशियन"], "a": 0, "s": 0, "qe": "The Himalayas were formed due to the collision of which two plates?", "oe": ["Indian and Eurasian", "Indian and African", "Eurasian and Australian", "Pacific and Eurasian"]}, {"q": "मध्य-महासागरीय कटक (Mid-oceanic Ridge), मारियाना ट्रेंच और सैन एंड्रियास फॉल्ट का सही मिलान है:", "o": ["1-अपसारी, 2-अभिसारी, 3-रूपांतरित", "1-अभिसारी, 2-अपसारी, 3-रूपांतरण", "1-रूपांतरण, 2-अभिसारी, 3-अपसारी", "1-अपसारी, 2-रूपांतरित, 3-अभिसारी"], "a": 0, "s": 1, "qe": "Correct matching of Mid-oceanic Ridge, Mariana Trench and San Andreas Fault:", "oe": ["1-Divergent, 2-Convergent, 3-Transform", "1-Convergent, 2-Divergent, 3-Transform", "1-Transform, 2-Convergent, 3-Divergent", "1-Divergent, 2-Transform, 3-Convergent"]}, {"q": "प्लेट विवर्तनिकी का सिद्धांत किसने और कब दिया?", "o": ["मैकेंजी और पार्कर, 1967", "वेगनर, 1912", "होम्स, 1950", "रिचटर, 1935"], "a": 0, "s": 0, "qe": "The Plate Tectonic Theory was given by whom and when?", "oe": ["McKenzie and Parker, 1967", "Wegener, 1912", "Holmes, 1950", "Richter, 1935"]}, {"q": "मारियाना ट्रेंच के बारे में कथन 1: यह पृथ्वी का सबसे गहरा महासागरीय गर्त है, अधिकतम गहराई लगभग 10,984 मीटर है।<br>कथन 2: इसका सबसे गहरा भाग 'चैलेंजर डीप' कहलाता है।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 2, "s": 1, "qe": "Statement 1: Mariana Trench is the deepest oceanic trench on Earth, with maximum depth of about 10,984 metres.<br>Statement 2: Its deepest point is called 'Challenger Deep'.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "प्रशांत रिंग ऑफ फायर (Pacific Ring of Fire) की आकृति कैसी है?", "o": ["घोड़े की नाल के आकार की", "वृत्ताकार", "त्रिभुजाकार", "सीधी रेखा"], "a": 0, "s": 0, "qe": "What is the shape of the Pacific Ring of Fire?", "oe": ["Horse-shoe shaped", "Circular", "Triangular", "Straight line"]}, {"q": "हिमनदीय स्थलाकृतियों पर विचार कीजिए। कथन 1: लटकती (निलंबी) घाटियाँ प्रायः अधिक ऊँचाई पर मुख्य हिमनद घाटियों में खुलती हुई पाई जाती हैं।<br>कथन 2: ऐसी निलंबी घाटियों के पर्वत-स्कंध प्रायः रुंढित होकर त्रिभुजाकार फलकों में बदल जाते हैं।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 2, "s": 1, "qe": "Consider glacial landforms. Statement 1: Hanging valleys usually open into the main glacial valleys at higher elevations.<br>Statement 2: The spurs of such hanging valleys are often truncated and converted into triangular facets.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "हिमनद द्वारा बनी अपरदनात्मक भूआकृति 'सर्क' (Cirque) क्या है?", "o": ["पहाड़ की ढलान पर कटोरे जैसी गहरी गोलाकार घाटी", "अंडाकार छोटी पहाड़ियाँ", "समुद्री जल का हिमनदीय घाटी में प्रवेश", "लंबी संकरी डामर-जैसी संरचना"], "a": 0, "s": 0, "qe": "What is a 'Cirque' - an erosional landform made by a glacier?", "oe": ["A deep bowl-shaped valley on a mountain slope", "Oval small hills", "Sea water entering a glacial valley", "Long narrow asphalt-like structure"]}, {"q": "'अरैट' (Arête) किसे कहते हैं?", "o": ["दो घाटियों के बीच बनी पतली, धारदार पहाड़ी कगार", "ग्लेशियर द्वारा लाई मिट्टी-पत्थरों का ढेर", "हिमनद झील", "चट्टानी संकीर्ण स्तंभ"], "a": 0, "s": 0, "qe": "What is an 'Arête'?", "oe": ["A narrow, sharp-edged mountain ridge between two valleys", "Debris of soil-stones brought by glacier", "Glacial lake", "Rocky narrow pillar"]}, {"q": "जब सर्क में जल भर जाता है तो क्या बनता है?", "o": ["फियोर्ड", "टार्न झील", "मोरेन", "ड्रमलिन"], "a": 1, "s": 0, "qe": "When a cirque fills with water, what is formed?", "oe": ["Fjord", "Tarn lake", "Moraine", "Drumlin"]}, {"q": "निक्षेपणात्मक हिमनदीय भूआकृति 'एस्कर' (Esker) क्या है?", "o": ["पिघले पानी की नदियों द्वारा बनी लंबी, संकरी डामर जैसी संरचना", "कटोरे जैसी घाटी", "अर्धचंद्र टीले", "गहरी गड्ढा"], "a": 0, "s": 0, "qe": "What is an 'Esker' - a depositional glacial landform?", "oe": ["A long, narrow ridge-like structure formed by meltwater streams", "A bowl-shaped valley", "Crescent-shaped dunes", "Deep hollow"]}, {"q": "फियोर्ड (Fjord) क्या है?", "o": ["समुद्री जल का हिमनद द्वारा बनी घाटी में प्रवेश", "हिमनद द्वारा उड़ाई गई मिट्टी", "शुष्क क्षेत्र की नमकीन झील", "रेत की टीले"], "a": 0, "s": 0, "qe": "What is a Fjord?", "oe": ["Sea water entering a valley carved by glacier", "Soil blown away by wind", "Salt lake in dry region", "Sand dune"]}, {"q": "हिमालय के निर्माण के बारे में कथन 1: लगभग 5 करोड़ वर्ष पहले भारतीय प्लेट उत्तर की ओर बढ़ते हुए यूरेशियन प्लेट से टकराई।<br>कथन 2: इस टकराव के परिणामस्वरूप तिब्बती पठार का निर्माण नहीं हुआ।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 0, "s": 1, "qe": "Statement 1: About 5 crore years ago, the Indian plate moved northward and collided with the Eurasian plate.<br>Statement 2: As a result of this collision, the Tibetan Plateau was not formed.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "प्राचीन महासागर 'पैन्थालासा' किसे घेरे हुए था?", "o": ["पैंजिया (Pangaea) महाद्वीप को", "गोंडवाना को", "लौरेशिया को", "एशिया को"], "a": 0, "s": 0, "qe": "The ancient ocean 'Panthalassa' surrounded?", "oe": ["Pangaea supercontinent", "Gondwana", "Laurasia", "Asia"]}, {"q": "सभी महाद्वीपों के एक साथ मिले महाद्वीप को क्या कहा जाता था?", "o": ["गोंडवाना", "लौरेशिया", "पैंजिया", "एंगारा"], "a": 2, "s": 0, "qe": "The single merged continent of all continents was called?", "oe": ["Gondwana", "Laurasia", "Pangaea", "Angara"]}, {"q": "लौरेशिया (Laurasia) कैसा महाद्वीप था?", "o": ["दक्षिणी गोलार्ध का", "उत्तरी गोलार्ध का", "पूर्वी गोलार्ध का", "पश्चिमी गोलार्ध का"], "a": 1, "s": 0, "qe": "Laurasia was a supercontinent of which hemisphere?", "oe": ["Southern hemisphere", "Northern hemisphere", "Eastern hemisphere", "Western hemisphere"]}, {"q": "दक्षिणी सुपरमहाद्वीप का नाम क्या था?", "o": ["लौरेशिया", "पैंजिया", "गोंडवाना", "एंगारा"], "a": 2, "s": 0, "qe": "What was the name of the southern supercontinent?", "oe": ["Laurasia", "Pangaea", "Gondwana", "Angara"]}, {"q": "मरुस्थलीय क्षेत्रों में पवन-अपरदित स्थलाकृतियों पर विचार कीजिए। 1. मशरूम के आकार की चट्टानें 2. मेज जैसी सपाट शीर्ष वाली अवशिष्ट पहाड़ियाँ 3. अलग-थलग स्तंभों (पेडेस्टल) के रूप में खड़े चट्टानी अवशेष।", "o": ["केवल 1", "1 और 2 दोनों", "2 और 3 दोनों", "1, 2 और 3 सभी"], "a": 3, "s": 1, "qe": "Consider wind-eroded landforms in desert areas. 1. Mushroom-shaped rocks 2. Residual hills with flat table-like tops 3. Rocky remnants standing as isolated columns (pedestals).", "oe": ["Only 1", "1 and 2 only", "2 and 3 only", "1, 2 and 3 all"]}, {"q": "जैसलमेर (राजस्थान) में पाई जाने वाली अर्धचंद्राकार रेत की टीलों को क्या कहते हैं?", "o": ["बार्खान", "सीफ", "बजाडा", "प्लाया"], "a": 0, "s": 0, "qe": "The crescent-shaped sand dunes found in Jaisalmer (Rajasthan) are called?", "oe": ["Barchan", "Seif", "Bajada", "Playa"]}, {"q": "विस्तृत मरुस्थलीय मैदान, जो कई छोटी घाटियों और समतल सतहों के मिलकर बनता है, कहलाता है:", "o": ["पेडिप्लेन", "प्लाया", "यार्डांग", "ज़ॉइगन"], "a": 0, "s": 0, "qe": "An extensive desert plain formed by the merging of many small valleys and flat surfaces is called?", "oe": ["Pediplain", "Playa", "Yardang", "Zeugen"]}, {"q": "कथन 1: बार्खान अर्धचंद्राकार टीले होती हैं।<br>कथन 2: सीफ टीलों में केवल एक पंख जैसी आकृति होती है।", "o": ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1, न ही 2"], "a": 2, "s": 1, "qe": "Statement 1: Barchans are crescent-shaped dunes.<br>Statement 2: Seif dunes have only a single wing-like shape.", "oe": ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"]}, {"q": "हवा द्वारा मिट्टी उड़ाने से बनी गहरी गड्ढे को क्या कहते हैं?", "o": ["डिफ्लेशन होलो", "यार्डांग", "ज़ॉइगन", "प्लाया"], "a": 0, "s": 0, "qe": "What is a deep hollow formed by wind blowing away soil called?", "oe": ["Deflation hollow", "Yardang", "Zeugen", "Playa"]}, {"q": "पर्वत की तलहटी में जमा रेत और कंकड़ से बनी ढलान को क्या कहते हैं?", "o": ["बजाडा", "पेडिप्लेन", "मोरेन", "एस्कर"], "a": 0, "s": 0, "qe": "A slope formed of deposited sand and gravel at the foot of a mountain is called?", "oe": ["Bajada", "Pediplain", "Moraine", "Esker"]}, {"q": "अपक्षय (Weathering) के प्रकार कौन से हैं?", "o": ["भौतिक, रासायनिक, जैविक", "केवल भौतिक", "केवल रासायनिक", "जल, वायु, हिम"], "a": 0, "s": 0, "qe": "What are the types of Weathering?", "oe": ["Physical, Chemical, Biological", "Only Physical", "Only Chemical", "Water, Air, Snow"]}, {"q": "अपक्षय प्रक्रियाओं के मिलान पर विचार कीजिए: (A) अपक्षय (B) वृहद संचलन (C) अपरदन एवं परिवहन (D) अनाच्छादन। बल: 1. गतिज ऊर्जा 2. गुरुत्वाकर्षण/आणविक तनाव/रासायनिक क्रियाएँ 3. गुरुत्वाकर्षण बल 4. पृथ्वी की सतह पर कार्यरत बाह्य बल।", "o": ["A-2, B-3, C-1, D-4", "A-2, B-1, C-3, D-4", "A-4, B-3, C-2, D-1", "A-1, B-2, C-3, D-4"]d</span></div>
       <div class="stat"><b style="color:var(--blue)" id="stAccuracy">0%</b><span>Accuracy</span></div>
     </div>
     <p id="saveNote" class="muted"></p>
