@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>भूगोल टेस्ट | Geography Test</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7fb;--c:#fff;--t:#1c2033;--m:#6b7089;--p:#3949ab;--ok:#2e7d32;--no:#c62828;--b:#dfe2ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161f;--c:#1e2130;--t:#eceefa;--m:#9a9fb8;--p:#8c9eff;--ok:#66bb6a;--no:#ef5350;--b:#33374d}}
+:root[data-theme="dark"]{--bg:#14161f;--c:#1e2130;--t:#eceefa;--m:#9a9fb8;--p:#8c9eff;--ok:#66bb6a;--no:#ef5350;--b:#33374d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif}
+.w{max-width:680px;margin:0 auto;padding:14px}
+.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:16px;margin-bottom:12px}
+h1{font-size:22px;margin:4px 0}h2{font-size:18px;margin:0 0 8px}
+button,input{font:inherit}
+.btn{background:var(--p);color:#fff;border:0;border-radius:10px;padding:11px 18px;cursor:pointer}
+.btn.g{background:none;color:var(--p);border:1px solid var(--p)}
+input{width:100%;padding:11px;border:1px solid var(--b);border-radius:10px;background:var(--bg);color:var(--t)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:2}
+.lang{display:flex;border:1px solid var(--p);border-radius:20px;overflow:hidden}
+.lang button{border:0;background:none;color:var(--p);padding:6px 12px;cursor:pointer}.lang .on{background:var(--p);color:#fff}
+.opt{display:block;width:100%;text-align:left;background:var(--c);color:var(--t);border:1px solid var(--b);border-radius:10px;padding:12px;margin:8px 0;cursor:pointer}
+.opt.sel{border-color:var(--p);background:color-mix(in srgb,var(--p) 14%,transparent)}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,transparent)}
+.opt.no{border-color:var(--no);background:color-mix(in srgb,var(--no) 16%,transparent)}
+.st{margin:4px 0;padding-left:4px}.tag{font-size:12px;color:var(--m)}
+.pal{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.pal span{width:30px;height:30px;border-radius:7px;border:1px solid var(--b);display:grid;place-items:center;font-size:13px;cursor:pointer}
+.pal .a{background:var(--p);color:#fff}.pal .c{outline:2px solid var(--t)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:8px;border-bottom:1px solid var(--b);text-align:left;white-space:nowrap}
+.big{font-size:40px;font-weight:700;color:var(--p)}.hide{display:none}
+</style></head><body><div class="w" id="app"></div>
+<script>
+// ---- QUESTION BANK: "hi|en" strings. type S = statement-based (standard options) ----
+const SO=["केवल कथन 1|Only statement 1","केवल कथन 2|Only statement 2","कथन 1 और 2 दोनों|Both 1 and 2","न 1, न 2|Neither 1 nor 2"];
+const Q=[
+["रिक्टर पैमाना किसे मापता है?|The Richter scale measures?",["भूकंप का परिमाण|Earthquake magnitude","ज्वालामुखी की तीव्रता|Volcanic intensity","वायुमंडलीय दाब में भिन्नता|Air-pressure variation","सुनामी की ऊँचाई|Tsunami height"],0],
+["भारत का क्षेत्रफल विश्व के कुल क्षेत्रफल का कितना प्रतिशत है?|India's area is what % of the world's area?",["1.4%","2.4%","3.4%","4.4%"],1],
+["जुआरी नदी के मुहाने पर कौन सा बंदरगाह है?|Which port lies at the mouth of the Zuari river?",["मुंबई|Mumbai","मर्मागाओ|Mormugao","हल्दिया|Haldia","पारादीप|Paradip"],1],
+["भारत में नौकायन जलमार्गों की कुल लंबाई (किमी) कितनी है?|Total length (km) of navigable waterways in India?",["6500","8000","11200","14500"],3],
+["कोंकण रेलवे किन्हें जोड़ती है?|Konkan Railway connects?",["रोहा और मैंगलोर|Roha and Mangalore","कोलकाता और कटक|Kolkata and Cuttack","कटक और हैदराबाद|Cuttack and Hyderabad","कोच्चि और चेन्नई|Kochi and Chennai"],0],
+["'भारत का मैनचेस्टर' कौन सा औद्योगिक क्षेत्र है?|Which industrial region is the 'Manchester of India'?",["छोटा नागपुर|Chota Nagpur","मुंबई-पुणे|Mumbai-Pune","हुगली|Hooghly","अहमदाबाद-वडोदरा|Ahmedabad-Vadodara"],3],
+["हीराकुंड बांध किस नदी पर है?|Hirakud Dam is built on which river?",["पेरियार|Periyar","कृष्णा|Krishna","महानदी|Mahanadi","सिंधु|Indus"],2],
+["कौन सा अलौह धात्विक खनिज है?|Which is a non-ferrous metallic mineral?",["मैंगनीज|Manganese","लौह अयस्क|Iron ore","बॉक्साइट|Bauxite","क्रोमाइट|Chromite"],2],
+["डिगबोई, मोरन, नहरकटिया तेल क्षेत्र कहाँ हैं?|Digboi, Moran, Nahorkatiya oilfields are in?",["अरावली|Aravalli","दक्कन पठार|Deccan Plateau","पूर्वोत्तर भारत|North-East India","पश्चिमी तटीय मैदान|Western coastal plain"],2],
+["हिंद महासागर का कौन सा द्वीप राष्ट्र सबसे छोटा है?|Smallest Indian Ocean island country by area?",["सेशेल्स|Seychelles","मालदीव|Maldives","श्रीलंका|Sri Lanka","मॉरीशस|Mauritius"],1],
+["चंबल के बीहड़ किन राज्यों में हैं?|Chambal ravines are found in?",["राजस्थान, गुजरात, मध्य प्रदेश|Rajasthan, Gujarat, MP","राजस्थान, मध्य प्रदेश, उत्तर प्रदेश|Rajasthan, MP, UP","मध्य प्रदेश, उत्तर प्रदेश, गुजरात|MP, UP, Gujarat","पंजाब, हरियाणा, मध्य प्रदेश|Punjab, Haryana, MP"],1],
+["स्वर्णिम चतुर्भुज के पूर्व-पश्चिम गलियारे की लंबाई (किमी)?|Length (km) of the East-West corridor?",["2900","3640","4700","5860"],1],
+["कौन सा शहर पवन-विमुख ढाल पर होने से मानसून में कम वर्षा पाता है?|Which city, on the leeward side, gets less monsoon rain?",["मुंबई|Mumbai","पुणे|Pune","चेरापूंजी|Cherrapunji","मापुसा|Mapusa"],1],
+["संवहनी वर्षा का मुख्य कारण क्या है?|Main cause of convectional rainfall?",["ठंडी हवा का गर्म हवा से मिलना|Cold air meeting warm air","पर्वत द्वारा हवा को ऊपर उठाना|Mountains forcing air up","नम गर्म हवा का ऊपर उठकर ठंडा होना|Warm moist air rising and cooling","ध्रुवीय शुष्क हवा|Dry polar air"],2],
+["प्रायद्वीपीय भारत में प्रमुख जल विभाजक कौन है?|Which is the major water divide of peninsular India?",["विंध्य|Vindhyas","अरावली|Aravalli","पश्चिमी घाट|Western Ghats","पूर्वी घाट|Eastern Ghats"],2],
+["कौन सी नदी घाटी पूर्वोत्तर पठार के कोयला भंडार से जुड़ी है?|Which river valley is linked with the plateau's coal belt?",["ताप्ती|Tapti","गंगा|Ganga","ब्रह्मपुत्र|Brahmaputra","दामोदर|Damodar"],3],
+["दक्षिण भारत की सबसे ऊँची चोटी?|Highest peak of South India?",["अनामुडी|Anamudi","डोड्डाबेट्टा|Doddabetta","गुरु शिखर|Guru Shikhar","महेंद्रगिरि|Mahendragiri"],0],
+["लक्षद्वीप की राजधानी?|Capital of Lakshadweep?",["कवरत्ती|Kavaratti","पोर्ट ब्लेयर|Port Blair","मिनिकॉय|Minicoy","अगत्ती|Agatti"],0],
+["भारत का कितना प्रतिशत भाग पठारी है?|What % of India's land is plateau?",["5%","12%","27%","59%"],2],
+["सिंधु जल संधि किस वर्ष हुई?|Indus Waters Treaty was signed in?",["1960","1965","1947","1972"],0],
+// ---- statement based ----
+["S","1. मृदा निर्माण में तापमान, वर्षा जैसे भौतिक व रासायनिक कारक शामिल हैं।|1. Soil formation involves physical and chemical factors like temperature and rainfall.","2. मृदा केवल भारी वर्षा वाले क्षेत्रों में बनती है।|2. Soil forms only where rainfall is heavy.",0],
+["S","1. गहरे महासागरीय मैदान विशाल व समतल होते हैं।|1. Abyssal plains are vast, flat deep-ocean floors.","2. महासागरीय गर्त आमतौर पर उथले होते हैं।|2. Ocean trenches are generally shallow.",0],
+["S","1. भारत में वर्तमान में कोई सक्रिय ज्वालामुखी नहीं है।|1. India currently has no active volcano.","2. ज्वालामुखी विस्फोट प्लेट विवर्तनिकी से जुड़ा है।|2. Volcanic eruptions are linked to plate tectonics.",1],
+["S","1. भारत में मैंगनीज का सबसे बड़ा भंडार आंध्र प्रदेश में है।|1. India's largest manganese reserve is in Andhra Pradesh.","2. मैंगनीज लौह-इस्पात निर्माण का महत्वपूर्ण कच्चा माल है।|2. Manganese is a key raw material for iron and steel.",1],
+["S","1. ओडिशा बॉक्साइट का सबसे बड़ा उत्पादक राज्य है।|1. Odisha is the largest bauxite-producing state.","2. अधिकांश बॉक्साइट पठारों की लेटराइट चट्टानों में मिलता है।|2. Most bauxite occurs in laterite rocks of plateaus.",2],
+["S","1. P-तरंगें ठोस, द्रव और गैस से गुजरती हैं।|1. P-waves travel through solids, liquids and gases.","2. S-तरंगें द्रव माध्यम से गुजर सकती हैं।|2. S-waves can pass through liquids.",0],
+["S","1. रिक्टर पैमाना भूकंप का परिमाण मापता है।|1. Richter scale measures earthquake magnitude.","2. मर्केली पैमाना भूकंप की तीव्रता मापता है।|2. Mercalli scale measures earthquake intensity.",2],
+["S","1. महाद्वीपीय मग्न तट की ढलान लगभग 1° या कम होती है।|1. Continental shelf slope is about 1° or less.","2. सबसे चौड़ा शेल्फ पेरू-चिली तट पर है।|2. The widest shelf is off Peru and Chile.",0],
+["S","1. हीराकुंड दुनिया के सबसे लंबे मिट्टी के बांधों में है।|1. Hirakud is among the world's longest earthen dams.","2. यह ओडिशा के संबलपुर में स्थित है।|2. It is located in Sambalpur, Odisha.",2],
+["S","1. पश्चिमी घाट छह राज्यों में फैला है।|1. The Western Ghats span six states.","2. अनामुडी पश्चिमी घाट की सबसे ऊँची चोटी है।|2. Anamudi is the highest peak of the Western Ghats.",2],
+["S","1. दक्कन पठार त्रिभुजाकार है।|1. The Deccan Plateau is triangular.","2. पूर्वी घाट इसकी पश्चिमी सीमा हैं।|2. The Eastern Ghats form its western boundary.",0],
+["S","1. एन्नोर भारत का पहला निगमित प्रमुख बंदरगाह है।|1. Ennore is India's first corporatised major port.","2. मुंबई भारत का सबसे बड़ा कंटेनर बंदरगाह है।|2. Mumbai is India's largest container port.",0],
+["S","1. रावी, ब्यास, सतलज भारत को आवंटित हैं।|1. Ravi, Beas, Sutlej are allotted to India.","2. सिंधु जल संधि 1947 में हुई।|2. The Indus Waters Treaty was signed in 1947.",0],
+["मारियाना ट्रेंच किस महासागर में है?|In which ocean is the Mariana Trench?",["अटलांटिक|Atlantic","प्रशांत|Pacific","हिंद|Indian","आर्कटिक|Arctic"],1],
+["भारत का सबसे लंबा राष्ट्रीय राजमार्ग?|India's longest national highway?",["NH 48","NH 27","NH 44","NH 19"],2],
+["सबसे लंबी तटरेखा वाला भारतीय राज्य?|Indian state with the longest coastline?",["गुजरात|Gujarat","महाराष्ट्र|Maharashtra","तमिलनाडु|Tamil Nadu","ओडिशा|Odisha"],0],
+["सबसे छोटी तटरेखा वाला राज्य?|State with the shortest coastline?",["केरल|Kerala","गोवा|Goa","ओडिशा|Odisha","पश्चिम बंगाल|West Bengal"],1],
+["भारत का पहला ट्रांसशिपमेंट बंदरगाह?|India's first transshipment port?",["मुंद्रा|Mundra","कांडला|Kandla","कोचीन|Kochi","विझिंजम|Vizhinjam"],3],
+["भारत का सबसे बड़ा कंटेनर बंदरगाह?|India's largest container port?",["मुंबई|Mumbai","जवाहरलाल नेहरू (न्हावा शेवा)|JNPT (Nhava Sheva)","चेन्नई|Chennai","कांडला|Kandla"],1],
+["'अरब सागर की रानी' किसे कहा जाता है?|Which is called 'Queen of the Arabian Sea'?",["मंगलौर|Mangalore","मुंबई|Mumbai","कोचीन|Kochi","मर्मागाओ|Mormugao"],2],
+["सतलज का उद्गम स्थल?|Source of the Sutlej?",["गंगोत्री|Gangotri","राक्षसताल झील|Rakshastal Lake","पैंगोंग झील|Pangong Lake","वुलर झील|Wular Lake"],1],
+["चिनाब का प्राचीन नाम?|Ancient name of the Chenab?",["वितस्ता|Vitasta","परुष्णी|Parushni","शुतुद्री|Shutudri","अस्किनी|Asikni"],3],
+["'दक्षिण गंगा' किस नदी को कहते हैं?|Which river is called 'Dakshin Ganga'?",["कृष्णा|Krishna","गोदावरी|Godavari","कावेरी|Kaveri","महानदी|Mahanadi"],1],
+["भाखड़ा-नांगल परियोजना किस नदी पर है?|Bhakra-Nangal is on which river?",["ब्यास|Beas","रावी|Ravi","सतलज|Sutlej","चिनाब|Chenab"],2],
+["गोविंद वल्लभ पंत सागर किस बांध का जलाशय है?|Govind Ballabh Pant Sagar is the reservoir of which dam?",["रिहंद|Rihand","हीराकुंड|Hirakud","भाखड़ा|Bhakra","तिलैया|Tilaiya"],0],
+["दामोदर घाटी परियोजना किस पर आधारित है?|Damodar Valley Project is modelled on?",["नील घाटी|Nile Valley","कोलोराडो|Colorado","टेनेसी घाटी (अमेरिका)|Tennessee Valley (USA)","मिसिसिपी|Mississippi"],2],
+["भारत का सबसे दक्षिणी बिंदु?|Southernmost point of India?",["कन्याकुमारी|Kanyakumari","इंदिरा पॉइंट|Indira Point","गुहार मोती|Guhar Moti","किबिथू|Kibithu"],1],
+["भारत का सबसे पश्चिमी स्थल?|Westernmost place of India?",["किबिथू|Kibithu","इंदिरा कॉल|Indira Col","इंदिरा पॉइंट|Indira Point","गुहार मोती|Guhar Moti"],3],
+["अरावली की सर्वोच्च चोटी?|Highest peak of the Aravalli?",["धूपगढ़|Dhupgarh","गुरु शिखर|Guru Shikhar","दोदाबेट्टा|Doddabetta","अनामुडी|Anamudi"],1],
+["सतपुड़ा की सर्वोच्च चोटी?|Highest peak of the Satpura?",["धूपगढ़|Dhupgarh","गुरु शिखर|Guru Shikhar","अनामुडी|Anamudi","कलसूबाई|Kalsubai"],0],
+["'सतपुड़ा की रानी' कौन सा हिल स्टेशन है?|Which hill station is 'Queen of Satpura'?",["माउंट आबू|Mount Abu","ऊटी|Ooty","पचमढ़ी|Pachmarhi","महाबलेश्वर|Mahabaleshwar"],2],
+["'भारत का रूर' किसे कहते हैं?|Which is called the 'Ruhr of India'?",["मालवा पठार|Malwa Plateau","छोटानागपुर पठार|Chota Nagpur Plateau","दक्कन पठार|Deccan Plateau","मेघालय पठार|Meghalaya Plateau"],1],
+["उत्तरी गोलार्ध में चक्रवात की दिशा?|Direction of cyclones in the Northern Hemisphere?",["दक्षिणावर्त|Clockwise","सीधी|Straight","बदलती|Variable","वामावर्त|Anticlockwise"],3],
+["ऑस्ट्रेलिया में चक्रवात को क्या कहते हैं?|Cyclones in Australia are called?",["हरिकेन|Hurricane","टाइफून|Typhoon","विली-विली|Willy-Willy","टॉरनेडो|Tornado"],2],
+["'सुनामी' शब्द किस भाषा का है?|'Tsunami' is a word from which language?",["चीनी|Chinese","जापानी|Japanese","कोरियाई|Korean","मलय|Malay"],1],
+["भारत की सबसे बड़ी कृत्रिम झील?|India's largest artificial lake?",["हीराकुंड|Hirakud","नागार्जुन सागर|Nagarjuna Sagar","गोविंद वल्लभ पंत सागर|Govind Ballabh Pant Sagar","इंदिरा सागर|Indira Sagar"],2],
+["भारत में सर्वाधिक सोना उत्पादक राज्य?|Top gold-producing state in India?",["कर्नाटक|Karnataka","आंध्र प्रदेश|Andhra Pradesh","झारखंड|Jharkhand","बिहार|Bihar"],0],
+["बॉक्साइट किस धातु का मुख्य अयस्क है?|Bauxite is the chief ore of?",["तांबा|Copper","लोहा|Iron","एल्युमीनियम|Aluminium","जस्ता|Zinc"],2],
+["राष्ट्रीय अवसंरचना पाइपलाइन (NIP) की घोषणा किस वर्ष हुई?|NIP was announced in which year?",["2015","2017","2019","2021"],2],
+["S","1. रावी का उद्गम रोहतांग दर्रे के पास है।|1. The Ravi rises near Rohtang Pass.","2. चंद्र व भागा के संगम से चिनाब बनती है।|2. The Chenab forms from the Chandra and Bhaga.",2],
+["S","1. सरदार सरोवर बांध नर्मदा पर है।|1. Sardar Sarovar Dam is on the Narmada.","2. नागार्जुन सागर गोदावरी पर है।|2. Nagarjuna Sagar is on the Godavari.",0],
+["S","1. कोलकाता भारत का एकमात्र नदी बंदरगाह है।|1. Kolkata is India's only riverine major port.","2. कांडला ज्वारीय बंदरगाह है।|2. Kandla is a tidal port.",2],
+["S","1. उष्णकटिबंधीय चक्रवात के लिए ~27°C या अधिक समुद्री तापमान चाहिए।|1. Tropical cyclones need sea temperature of about 27°C or more.","2. शीतोष्ण चक्रवात में स्पष्ट 'आँख' होती है।|2. Temperate cyclones have a clear 'eye'.",0],
+["S","1. पवनाभिमुख ढाल पर भारी वर्षा होती है।|1. Windward slopes get heavy rain.","2. पवनविमुख ढाल वृष्टि छाया क्षेत्र होता है।|2. Leeward slopes are rain-shadow areas.",2],
+["S","1. सागर नितल प्रसरण सिद्धांत हैरी हेस ने दिया।|1. Sea-floor spreading was proposed by Harry Hess.","2. नई भूपर्पटी मध्य-महासागरीय कटक पर बनती है।|2. New crust forms at mid-ocean ridges.",2],
+["S","1. अरावली विश्व की प्राचीनतम वलित पर्वतमालाओं में है।|1. Aravalli is among the oldest fold ranges.","2. गुरु शिखर माउंट आबू में है।|2. Guru Shikhar is at Mount Abu.",2],
+["S","1. सतपुड़ा दक्कन पठार के उत्तर में विंध्य के समानांतर है।|1. Satpura lies north of the Deccan, parallel to the Vindhyas.","2. यह एक भ्रंश (ब्लॉक) पर्वत है।|2. It is a block mountain.",2],
+["S","1. मालदा गैप छोटानागपुर को मेघालय पठार से अलग करता है।|1. Malda Gap separates Chota Nagpur from the Meghalaya Plateau.","2. मेघालय पठार हिमालय का भाग है।|2. Meghalaya Plateau is part of the Himalaya.",0],
+["S","1. लक्षद्वीप क्षेत्रफल में सबसे छोटा केंद्रशासित प्रदेश है।|1. Lakshadweep is the smallest UT by area.","2. इसकी राजधानी कवरत्ती है।|2. Its capital is Kavaratti.",2],
+["S","1. भाखड़ा बांध सतलज पर है।|1. Bhakra Dam is on the Sutlej.","2. यह भारत का सबसे ऊँचा गुरुत्वीय बांध है।|2. It is India's highest gravity dam.",2],
+["S","1. NW-1 प्रयागराज से हल्दिया तक गंगा पर है।|1. NW-1 runs Prayagraj–Haldia on the Ganga.","2. NW-2 सादिया से धुबरी तक ब्रह्मपुत्र पर है।|2. NW-2 runs Sadiya–Dhubri on the Brahmaputra.",2],
+["S","1. कोयला एक ऊर्जा खनिज है।|1. Coal is an energy mineral.","2. अभ्रक धात्विक खनिज है।|2. Mica is a metallic mineral.",0],
+["विश्व की सबसे गहरी समुद्री खाई का सबसे गहरा बिंदु?|Deepest point of the world's deepest trench?",["सुंडा गर्त|Sunda Deep","चैलेंजर डीप|Challenger Deep","पोर्टो रिको|Puerto Rico","जावा|Java"],1],
+["सुंडा ट्रेंच किस महासागर में है?|In which ocean is the Sunda Trench?",["हिंद|Indian","प्रशांत|Pacific","अटलांटिक|Atlantic","आर्कटिक|Arctic"],0],
+["सागरमाला परियोजना किससे संबंधित है?|Sagarmala Project relates to?",["राजमार्ग|Highways","रेलवे|Railways","बंदरगाह विकास|Port development","हवाई अड्डे|Airports"],2],
+["भारतमाला परियोजना किससे संबंधित है?|Bharatmala Project relates to?",["नदी जोड़ो|River linking","राजमार्ग|Highways","बंदरगाह|Ports","पर्यटन|Tourism"],1],
+["भारत का उत्तर-दक्षिण विस्तार (किमी)?|India's north-south extent (km)?",["2933","3500","2500","3214"],3],
+["भारत का सबसे उत्तरी बिंदु?|Northernmost point of India?",["इंदिरा कॉल|Indira Col","किबिथू|Kibithu","गुहार मोती|Guhar Moti","कन्याकुमारी|Kanyakumari"],0],
+["भारत का सबसे पूर्वी स्थल?|Easternmost place of India?",["इंदिरा कॉल|Indira Col","गुहार मोती|Guhar Moti","किबिथू|Kibithu","इंदिरा पॉइंट|Indira Point"],2],
+["मृदा परिच्छेदिका में ह्यूमस वाला सबसे ऊपरी संस्तर?|Topmost humus horizon in a soil profile?",["R संस्तर|R horizon","O संस्तर|O horizon","C संस्तर|C horizon","B संस्तर|B horizon"],1],
+["अनामुडी की ऊँचाई लगभग?|Approximate height of Anamudi?",["1,722 m","2,695 m","1,350 m","2,467 m"],1],
+["मालवा पठार किस से बना है?|The Malwa Plateau is formed by?",["ग्रेनाइट|Granite","बलुआ पत्थर|Sandstone","हिमोढ़|Moraines","ज्वालामुखी लावा|Volcanic lava"],3],
+["मानव द्वारा खोजी गई पहली धातु?|First metal discovered by humans?",["लोहा|Iron","सोना|Gold","तांबा|Copper","टिन|Tin"],2],
+["सर क्रीक विवाद भारत और किस देश के बीच है?|Sir Creek dispute is between India and?",["चीन|China","पाकिस्तान|Pakistan","बांग्लादेश|Bangladesh","नेपाल|Nepal"],1],
+["क्षेत्रफल की दृष्टि से भारत का विश्व में स्थान?|India's rank in the world by area?",["5वाँ|5th","6वाँ|6th","8वाँ|8th","7वाँ|7th"],3],
+["नीलगिरि की दूसरी सबसे ऊँची चोटी?|Second highest peak of the Nilgiris?",["डोड्डाबेट्टा|Doddabetta","अनामुडी|Anamudi","महेंद्रगिरि|Mahendragiri","धूपगढ़|Dhupgarh"],0],
+["S","1. मारियाना ट्रेंच विश्व की सबसे गहरी समुद्री खाई है।|1. Mariana Trench is the world's deepest trench.","2. यह हिंद महासागर में है।|2. It lies in the Indian Ocean.",0],
+["S","1. सुंडा ट्रेंच हिंद महासागर की सबसे गहरी खाइयों में है।|1. Sunda Trench is among the deepest in the Indian Ocean.","2. यह सुमात्रा के समानांतर है।|2. It runs parallel to Sumatra.",2],
+["S","1. सागरमाला बंदरगाह विकास से जुड़ी है।|1. Sagarmala relates to port development.","2. भारतमाला राजमार्ग विकास से जुड़ी है।|2. Bharatmala relates to highway development.",2],
+["S","1. भारत क्षेत्रफल में विश्व का सातवाँ सबसे बड़ा देश है।|1. India is the 7th largest country by area.","2. भारत का पूर्व-पश्चिम विस्तार उत्तर-दक्षिण से अधिक है।|2. India's east-west extent exceeds its north-south extent.",0],
+["S","1. भारत उत्तरी और पूर्वी गोलार्ध में स्थित है।|1. India lies in the Northern and Eastern Hemispheres.","2. भारत का उत्तर-दक्षिण विस्तार 3214 किमी है।|2. India's north-south extent is 3214 km.",2],
+["S","1. मृदा के O संस्तर में ह्यूमस होता है।|1. The O horizon contains humus.","2. C संस्तर अपक्षयित आधारशिला है।|2. The C horizon is weathered parent rock.",2],
+["S","1. छोटानागपुर का जल-प्रवाह दामोदर नदी से होता है।|1. Chota Nagpur drains through the Damodar.","2. पारसनाथ चोटी केरल में है।|2. Parasnath peak is in Kerala.",0],
+["S","1. मालवा पठार लावा प्रवाह से बना है।|1. The Malwa Plateau was formed by lava flows.","2. यह काली मिट्टी से ढका है।|2. It is covered with black soil.",2],
+["S","1. पूर्वी घाट ओडिशा से तमिलनाडु तक फैला है।|1. The Eastern Ghats extend from Odisha to Tamil Nadu.","2. नीलगिरि पश्चिमी व पूर्वी घाट को जोड़ती है।|2. The Nilgiris link the Western and Eastern Ghats.",2],
+["S","1. पश्चिम की ओर बहने वाली नदियाँ डेल्टा बनाती हैं।|1. West-flowing rivers form deltas.","2. पूर्व की ओर बहने वाली नदियाँ डेल्टा बनाती हैं।|2. East-flowing rivers form deltas.",1],
+["S","1. सतलज शिपकी ला से हिमाचल में प्रवेश करती है।|1. The Sutlej enters Himachal via Shipki La.","2. यह अंत में सिंधु में मिल जाती है।|2. It finally joins the Indus.",2],
+["S","1. रिहंद बांध रिहंद नदी पर है।|1. Rihand Dam is on the Rihand river.","2. गांधी सागर बांध राजस्थान में है।|2. Gandhi Sagar Dam is in Rajasthan.",0],
+["S","1. गोदावरी की लंबाई लगभग 1465 किमी है।|1. The Godavari is about 1465 km long.","2. यह बिहार से होकर बहती है।|2. It flows through Bihar.",0],
+["S","1. मुंबई सबसे बड़ा प्राकृतिक बंदरगाह है।|1. Mumbai is the largest natural harbour.","2. मुंद्रा बंदरगाह महाराष्ट्र में है।|2. Mundra port is in Maharashtra.",0],
+];
+const T=Q.map(q=>q[0]==="S"?{s:[q[1],q[2]],o:SO,a:q[3]}:{q:q[0],o:q[1],a:q[2]});
+const TIME=30*60,POS=1,NEG=0.25;
+let L="hi",S=null,db=null,ta;
+const $=x=>document.getElementById(x),app=$("app");
+const tr=s=>{const p=String(s).split("|");return p.length>1?(L==="hi"?p[0]:p[1]):p[0]};
+const U={hi:{title:"भूगोल टेस्ट",name:"आपका नाम",start:"टेस्ट शुरू करें",next:"अगला",prev:"पिछला",sub:"जमा करें",q:"प्रश्न",sc:"अंक",corr:"सही",wr:"गलत",sk:"छोड़े",sel:"कथनों पर विचार करें:",tm:"समय",teach:"शिक्षक",rules:`${T.length} प्रश्न · 30 मिनट · सही +${POS}, गलत −${NEG}`,ok:"आपका उत्तर सही है",ans:"सही उत्तर",saved:"परिणाम शिक्षक को भेज दिया गया।",again:"दोबारा दें"},
+en:{title:"Geography Test",name:"Your name",start:"Start test",next:"Next",prev:"Previous",sub:"Submit",q:"Question",sc:"Score",corr:"Correct",wr:"Wrong",sk:"Skipped",sel:"Consider the statements:",tm:"Time",teach:"Teacher",rules:`${T.length} questions · 30 min · +${POS} correct, −${NEG} wrong`,ok:"Your answer is correct",ans:"Correct answer",saved:"Result sent to your teacher.",again:"Retake"}};
+const u=k=>U[L][k];
+const langBar=()=>`<div class="lang"><button class="${L==="hi"?"on":""}" onclick="setL('hi')">हिंदी</button><button class="${L==="en"?"on":""}" onclick="setL('en')">English</button></div>`;
+function setL(l){L=l;S&&S.done?result():S?quiz():home()}
+function home(){app.innerHTML=`<div class="top"><h1>${u("title")}</h1>${langBar()}</div><div class="card"><p class="tag">${u("rules")}</p><input id="nm" maxlength="40" placeholder="${u("name")}" value="${S&&S.name||""}"><p><button class="btn" onclick="begin()">${u("start")}</button></p></div><p><button id="tb" class="btn g hide" onclick="admin()">${u("teach")}</button></p>`;if(window.T_OK){$("tb").classList.remove("hide")}else chk()}
+async function chk(){try{const x=await claude.use("user");if(x&&x.canEdit()){window.T_OK=1;const b=$("tb");b&&b.classList.remove("hide")}}catch(e){}}
+function begin(){const n=$("nm").value.trim();if(!n){$("nm").focus();return}
+S={name:n,ans:Array(T.length).fill(-1),i:0,left:TIME,done:false};clearInterval(ta);ta=setInterval(()=>{S.left--;const e=$("tm");if(e)e.textContent=fmt(S.left);if(S.left<=0)submit()},1000);quiz()}
+const fmt=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+function qhtml(t,i,rev){return`<p class="tag">${u("q")} ${i+1}/${T.length}</p>`+(t.s?`<p>${u("sel")}</p>${t.s.map(x=>`<p class="st">${tr(x)}</p>`).join("")}`:`<h2>${tr(t.q)}</h2>`)}
+function quiz(){const i=S.i,t=T[i];
+app.innerHTML=`<div class="top"><b>⏱ <span id="tm">${fmt(S.left)}</span></b>${langBar()}</div><div class="card">${qhtml(t,i)}${t.o.map((o,k)=>`<button class="opt ${S.ans[i]===k?"sel":""}" onclick="pick(${k})">${"ABCD"[k]}. ${tr(o)}</button>`).join("")}
+<p style="display:flex;justify-content:space-between"><button class="btn g" ${i?"":"disabled"} onclick="go(-1)">${u("prev")}</button>${i<T.length-1?`<button class="btn" onclick="go(1)">${u("next")}</button>`:`<button class="btn" onclick="submit()">${u("sub")}</button>`}</p></div>
+<div class="pal">${T.map((_,k)=>`<span class="${S.ans[k]>=0?"a":""} ${k===i?"c":""}" onclick="S.i=${k};quiz()">${k+1}</span>`).join("")}</div><p><button class="btn g" onclick="if(confirm('${u("sub")}?'))submit()">${u("sub")}</button></p>`}
+function pick(k){S.ans[S.i]=S.ans[S.i]===k?-1:k;quiz()}
+function go(d){S.i+=d;quiz()}
+async function submit(){if(S.done)return;clearInterval(ta);S.done=true;let c=0,w=0;S.ans.forEach((a,i)=>{if(a>=0)a===T[i].a?c++:w++});
+S.c=c;S.w=w;S.k=T.length-c-w;S.score=+(c*POS-w*NEG).toFixed(2);S.used=TIME-Math.max(S.left,0);result();
+try{db=db||await claude.use("db");if(db){await db.doc("results/"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)).set({name:S.name,lang:L,score:S.score,c,w,k:S.k,total:T.length,used:S.used,ts:Date.now()});S.saved=1;result()}}catch(e){}}
+function result(){app.innerHTML=`<div class="top"><h1>${S.name}</h1>${langBar()}</div><div class="card" style="text-align:center"><div class="big">${S.score}/${T.length*POS}</div><p>${u("corr")}: ${S.c} · ${u("wr")}: ${S.w} · ${u("sk")}: ${S.k}<br>${u("tm")}: ${fmt(S.used)}</p>${S.saved?`<p class="tag">${u("saved")}</p>`:""}<button class="btn" onclick="S=null;home()">${u("again")}</button></div>`+
+T.map((t,i)=>{const a=S.ans[i];return`<div class="card">${qhtml(t,i)}${t.o.map((o,k)=>`<div class="opt ${k===t.a?"ok":k===a?"no":""}">${"ABCD"[k]}. ${tr(o)}</div>`).join("")}</div>`}).join("")}
+// ---- Teacher dashboard (results are readable only by the artifact owner/editors) ----
+async function admin(){app.innerHTML=`<div class="top"><h1>${u("teach")}</h1>${langBar()}</div><div id="ad" class="card">…</div><button class="btn g" onclick="home()">←</button>`;
+try{db=db||await claude.use("db");if(!db)throw 0;db.collection("results").orderBy("ts","desc").onSnapshot(s=>draw(s.docs.map(d=>d.data())),()=>{$("ad").textContent="Owner only / केवल शिक्षक (owner)"})}catch(e){$("ad").textContent="Owner only / केवल शिक्षक (owner)"}}
+function draw(r){const el=$("ad");if(!el)return;if(!r.length){el.textContent="No results yet / अभी कोई परिणाम नहीं";return}
+const avg=(r.reduce((a,x)=>a+x.score,0)/r.length).toFixed(2),top=Math.max(...r.map(x=>x.score));
+const rk=[...r].sort((a,b)=>b.score-a.score);
+el.innerHTML=`<p><b>${r.length}</b> students · avg <b>${avg}</b> · top <b>${top}</b></p><div class="tw"><table><tr><th>#</th><th>Name</th><th>Score</th><th>✔</th><th>✘</th><th>Skip</th><th>Time</th><th>Lang</th><th>Date</th></tr>${rk.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td><b>${x.score}</b></td><td>${x.c}</td><td>${x.w}</td><td>${x.k}</td><td>${fmt(x.used)}</td><td>${x.lang==="hi"?"हिं":"EN"}</td><td>${new Date(x.ts).toLocaleString()}</td></tr>`).join("")}</table></div>`}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+home();
+</script></body></html>
