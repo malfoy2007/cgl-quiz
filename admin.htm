@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Student Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ecf0f1;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .no-data {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+        .btn-clear {
+            display: block;
+            width: 200px;
+            margin: 20px auto 0;
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-clear:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Student Results Dashboard</h1>
+        <p style="text-align: center; color: #7f8c8d;">Showing results saved on this browser/device</p>
+        
+        <div id="tableContainer">
+            <!-- Table will be generated here -->
+        </div>
+        
+        <button class="btn-clear" onclick="clearResults()">Clear All Results</button>
+    </div>
+
+    <script>
+        function loadResults() {
+            const container = document.getElementById('tableContainer');
+            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+
+            if (results.length === 0) {
+                container.innerHTML = '<div class="no-data">No results found. Ask students to complete the test first.</div>';
+                return;
+            }
+
+            // Sort by Score Descending
+            results.sort((a, b) => b.score - a.score);
+
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Student Name</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Time Taken</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            results.forEach((res, index) => {
+                const percentage = ((res.score / res.total) * 100).toFixed(1);
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${res.name}</strong></td>
+                        <td>${res.score} / ${res.total}</td>
+                        <td>${percentage}%</td>
+                        <td>${res.timeTaken}</td>
+                        <td>${res.date}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table>`;
+            container.innerHTML = tableHTML;
+        }
+
+        function clearResults() {
+            if (confirm("Are you sure you want to clear all student results? This cannot be undone.")) {
+                localStorage.removeItem('quizResults');
+                loadResults();
+            }
+        }
+
+        // Load results on page load
+        window.onload = loadResults;
+    </script>
+</body>
+</html>
