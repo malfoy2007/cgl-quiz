@@ -3,213 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK PYQ Series - Geography Quiz</title>
+    <title>Parmar SSC Geography - 100 Qs Mock Test</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --bg: #f4f7f6;
-            --text: #333;
-            --card-bg: #fff;
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --danger: #dc2626;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 800px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: none;
-        }
-        .container.active {
-            display: block;
-        }
-        .header {
-            background: var(--primary);
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding-bottom: 50px; }
+        
+        header {
+            background-color: var(--primary);
             color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .header h1 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0; font-size: 14px; opacity: 0.8; }
-        
-        .login-screen {
-            padding: 40px;
-            text-align: center;
-        }
-        .login-screen input, .login-screen select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            margin-top: 10px;
-        }
-        .btn:hover { background: #2980b9; }
-        .btn-accent { background: var(--accent); }
-        .btn-accent:hover { background: #c0392b; }
-        
-        .quiz-area { padding: 30px; display: none; }
-        .quiz-area.active { display: block; }
-        
-        .question-info {
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            font-weight: bold;
-            color: var(--primary);
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .question-text {
-            font-size: 18px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .options label {
-            display: block;
-            background: #f9f9f9;
-            padding: 12px 15px;
-            margin-bottom: 10px;
+
+        .header-title h1 { font-size: 1.2rem; }
+        .header-controls { display: flex; gap: 10px; align-items: center; }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
-            border: 1px solid #eee;
+            font-weight: 600;
             transition: 0.2s;
         }
-        .options label:hover { background: #eef5f9; border-color: var(--secondary); }
-        .options input[type="radio"] { margin-right: 10px; }
+        .btn:hover { opacity: 0.9; }
+        .btn-admin { background-color: var(--accent); }
+        .btn-submit { background-color: var(--success); font-size: 1.1rem; padding: 12px 30px; width: 100%; margin-top: 20px; }
+
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
         
-        .nav-buttons { display: flex; gap: 10px; margin-top: 20px; }
-        .nav-buttons .btn { width: auto; flex: 1; }
-        
-        .result-screen { padding: 40px; text-align: center; display: none; }
-        .result-screen.active { display: block; }
-        .score { font-size: 48px; color: var(--secondary); font-weight: bold; margin: 20px 0; }
-        
-        .review-section { margin-top: 30px; text-align: left; }
-        .review-item { padding: 15px; border-bottom: 1px solid #eee; }
-        .review-item .q { font-weight: bold; }
-        .review-item .correct { color: #27ae60; font-weight: bold; }
-        .review-item .wrong { color: #e74c3c; text-decoration: line-through; }
-        
+        .student-info-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-group { flex: 1; min-width: 200px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        .input-group input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; }
+
+        .question-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--secondary);
+        }
+
+        .q-number { font-weight: bold; color: var(--secondary); margin-bottom: 8px; font-size: 1.05rem; }
+        .q-statement { font-size: 1rem; margin-bottom: 15px; }
+
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .option-label:hover { background-color: #f1f5f9; }
+        .option-label input { margin-right: 12px; }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #eff6ff;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Language Toggle Display */
         .lang-hi { display: none; }
-        .lang-en { display: block; }
-        .bilingual .lang-hi { display: block; margin-top: 5px; font-size: 0.9em; color: #555; }
-        .bilingual .lang-en { display: block; }
+        body.hi-mode .lang-en { display: none; }
+        body.hi-mode .lang-hi { display: block; }
+
+        /* Admin Panel Styles */
+        #adminPanel { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .admin-table th, .admin-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+        .admin-table th { background: var(--primary); color: white; }
+
+        #scoreBoard {
+            display: none;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Login Screen -->
-    <div class="container active" id="loginScreen">
-        <div class="header">
-            <h1>GK PYQ SERIES - Geography [Part 6]</h1>
-            <p>Lecture 4 | Parmar SSC</p>
-        </div>
-        <div class="login-screen">
-            <h3>Enter Your Details</h3>
-            <input type="text" id="studentName" placeholder="Full Name" required>
-            <select id="languageSelect">
-                <option value="en">English</option>
-                <option value="hi">Hindi (हिंदी)</option>
-                <option value="bi">Bilingual (Both)</option>
-            </select>
-            <button class="btn" onclick="startQuiz()">Start Test</button>
-        </div>
+<header>
+    <div class="header-title">
+        <h1>Parmar SSC - Geography Practice Test (100 Qs)</h1>
     </div>
+    <div class="header-controls">
+        <button class="btn" onclick="toggleLanguage()">Language: EN / HI</button>
+        <button class="btn btn-admin" onclick="toggleAdminView()">Teacher Admin</button>
+    </div>
+</header>
 
-    <!-- Quiz Screen -->
-    <div class="container" id="quizScreen">
-        <div class="header">
-            <h1>Geography Quiz</h1>
-        </div>
-        <div class="quiz-area active" id="quizArea">
-            <div class="question-info">
-                <span id="qCounter">Question 1 / 100</span>
-                <span id="timer">00:00</span>
+<div class="container">
+
+    <!-- STUDENT TEST SECTION -->
+    <div id="testSection">
+        <div class="student-info-card">
+            <div class="input-group">
+                <label>Student Name / छात्र का नाम:</label>
+                <input type="text" id="studentName" placeholder="Enter full name" required>
             </div>
-            <div class="question-text" id="questionText"></div>
-            <div class="options" id="optionsContainer"></div>
-            <div class="nav-buttons">
-                <button class="btn" onclick="prevQuestion()" id="prevBtn" style="background:#95a5a6;">Previous</button>
-                <button class="btn" onclick="nextQuestion()" id="nextBtn">Next</button>
-                <button class="btn btn-accent" onclick="submitQuiz()" id="submitBtn" style="display:none;">Submit</button>
+            <div class="input-group">
+                <label>Roll / Registration No:</label>
+                <input type="text" id="studentRoll" placeholder="Enter Roll No" required>
             </div>
         </div>
+
+        <div id="scoreBoard">
+            <h2>Test Results / परिणाम</h2>
+            <p id="scoreText" style="font-size: 1.4rem; margin: 10px 0; font-weight: bold;"></p>
+            <p>Scroll down to review detailed solutions for all questions.</p>
+        </div>
+
+        <form id="quizForm">
+            <div id="questionsContainer"></div>
+            <button type="button" class="btn btn-submit" onclick="submitTest()">Submit Test / टेस्ट जमा करें</button>
+        </form>
     </div>
 
-    <!-- Result Screen -->
-    <div class="container" id="resultScreen">
-        <div class="header">
-            <h1>Test Completed!</h1>
+    <!-- TEACHER / ADMIN PANEL -->
+    <div id="adminPanel">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Teacher Dashboard - Student Results</h2>
+            <button class="btn" onclick="toggleAdminView()">Back to Test View</button>
         </div>
-        <div class="result-screen active">
-            <h2 id="resultName"></h2>
-            <div class="score" id="scoreDisplay">0 / 100</div>
-            <p id="resultMsg"></p>
-            <div class="review-section" id="reviewSection"></div>
-            <button class="btn" onclick="location.reload()">Take Test Again</button>
-        </div>
+        <br>
+        <button class="btn btn-admin" onclick="clearResults()">Clear All Results Data</button>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Student Name</th>
+                    <th>Roll No</th>
+                    <th>Score</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="adminResultsTable">
+                <tr><td colspan="5" style="text-align: center;">No test submissions found yet.</td></tr>
+            </tbody>
+        </table>
     </div>
 
-    <script>
-        // --- Questions Data (Extracted from PDF, expanded with statements) ---
-        const questions = [
-            {
-                en: "1. In the alluvial plains of the Ganga, which of the following physical features will NOT be found?",
-                hi: "1. गंगा के जलोढ़ मैदानों में, निम्नलिखित में से कौन सी भौतिक विशेषता नहीं पाई जाती है?",
-                options: { en: ["Oxbow lakes", "Rapids", "Meanders", "Braided channels"], hi: ["गोखुर झीलें", "रैपिड्स", "मेन्डर्स", "ब्रैडेड चैनल"] },
-                answer: 1,
-                expl: "Rapids are found in the youthful stage of rivers (upper course), not in the alluvial plains of Ganga."
-            },
-            {
-                en: "2. Which of the following statements about the Indian Desert is/are correct? \n1. It lies to the west of the Aravali Hills \n2. It receives an average annual rainfall of over 250 mm.",
-                hi: "2. भारतीय मरुस्थल के बारे में निम्नलिखित में से कौन सा/से कथन सही है/हैं? \n1. यह अरावली पहाड़ियों के पश्चिम में स्थित है \n2. इसमें औसत वार्षिक वर्षा 250 मिमी से अधिक होती है।",
-                options: { en: ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"], hi: ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1 और न ही 2"] },
-                answer: 0,
-                expl: "The Thar Desert lies west of the Aravalli Hills. It receives very low precipitation (around 150 mm), not over 250 mm."
-            },
-            {
-                en: "3. Why are the Western Ghats considered globally significant according to UNESCO?",
-                hi: "3. यूनेस्को के अनुसार पश्चिमी घाट को विश्व स्तर पर महत्वपूर्ण क्यों माना जाता है?",
-                options: { en: ["They categorize urban rivers", "They influence the Indian monsoon and are among the world's top biodiversity hotspots", "They host polar species", "They form the only volcanic plateau"], hi: ["वे शहरी नदियों को वर्गीकृत करते हैं", "वे भारतीय मानसून को प्रभावित करते हैं और दुनिया के शीर्ष जैव विविधता हॉटस्पॉट में से हैं", "वे ध्रुवीय प्रजातियों की मेजबानी करते हैं", "वे एकमात्र ज्वालामुखीय पठार बनाते हैं"] },
-                answer: 1,
-                expl: "Western Ghats influence the Indian monsoon and are one of the world's top biodiversity hotspots with high endemic species."
-            },
-            {
-                en: "4. Why does the Tamil Nadu coast remain dry during the southwest monsoon?",
-                hi: "4. दक्षिण-पश्चिम मानसून के दौरान तमिलनाडु का तट शुष्क क्यों रहता है?",
-                options: { en: ["Due to extra-tropical cyclones", "It receives rainfall from Arabian Sea", "It is parallel to the Bay of Bengal branch", "ITCZ is below Tropic of Capricorn"], hi: ["अतिरिक्त-उष्णकटिबंधीय चक्रवातों के कारण", "इसे अरब सागर से वर्षा मिलती है", "यह बंगाल की खाड़ी शाखा के समानांतर है", "आईटीसीजेड मकर रेखा के नीचे है"] },
-                answer: 2,
-                expl: "Tamil Nadu coast is parallel to the Bay of Bengal branch of the southwest monsoon, so it doesn't get much rain during this season."
-            },
-            {
-                en: "5. Assertion (A): The retreating monsoon winds are associated with dry weather and clear skies in northern India. \nReason (R): During the retreating monsoon, the low-pressure area over the northern plains is replaced by a high-pressure system.",
-                hi: "5. अभिकथन (A): उत्तर भारत में शुष्क मौसम और साफ आसमान के साथ मानसून की वापसी की हवाएं जुड़ी हुई हैं। \nकारण (R): मानसून की वापसी के दौरान, उत्तरी मैदानों के ऊपर कम दबाव का क्षेत्र उच्च दबाव प्रणाली से बदल जाता है।",
-                options: { en: ["Both A and R are true, and R is the correct explanation of A", "Both A and R are true, but R is not the correct explanation of A", "A is true, but R is false", "A is false, but R is true"], hi: ["A और R दोनों सत्य हैं, और R, A की सही व्याख्या है", "A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है", "A सत्य है, लेकिन R असत्य है", "A असत्य है, लेकिन R सत्य है"] },
+</div>
+
+<script>
+// RAW QUESTION BANK GENERATED FROM PDF CONTENT
+const questions = [
+    {
+        id: 1,
+        qEn: "In the alluvial plains of the Ganga, which of the following physical features will NOT be found?",
+        qHi: "गंगा के जलोढ़ मैदानों में, निम्नलिखित में से कौन सी भौतिक विशेषता नहीं पाई जाएगी?",
+        optionsEn: ["Oxbow lakes", "Rapids", "Meanders", "Braided channels"],
+        optionsHi: ["गोखुर झीलें", "क्षिप्रिकाएँ", "विसर्प", "गुंफित जलमार्ग"],
+        ans: 1,
+        expEn: "Rapids are erosional features formed in the Youthful stage (Upper course) of a river[span_1](start_span)[span_1](end_span). Ganga's alluvial plains are in the mature/old stage[span_2](start_span)[span_2](end_span).",
+        expHi: "क्षिप्रिकाएँ (Rapids) नदी की युवावस्था (ऊपरी मार्ग) में बनती हैं[span_3](start_span)[span_3](end_span)। गंगा के जलोढ़ मैदान प्रौढ़ावस्था/वृद्धावस्था में आते हैं[span_4](start_span)[span_4](end_span)।"
+    },
+    {
+        id: 2,
+        isStatement: true,
+        qEn: "Which of the following statements about the Indian Desert is/are correct?<br>1. It lies to the west of the Aravalli hills.<br>2. It receives an average annual rainfall of over 250 mm.",
+        qHi: "भारतीय मरुस्थल के बारे में निम्नलिखित में से कौन सा / से कथन सही है/हैं?<br>1. यह अरावली पहाड़ियों के पश्चिम में स्थित है।<br>2. यहाँ औसतन वार्षिक वर्षा 250 मिमी से अधिक होती है।",
+        optionsEn: ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"],
+        optionsHi: ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1 और न ही 2"],
+        ans: 0,
+        expEn: "Statement 1 is correct[span_5](start_span)[span_5](end_span). Statement 2 is incorrect because Thar desert receives very low rainfall, marked as below 150 mm per year[span_6](start_span)[span_6](end_span).",
+        expHi: "कथन 1 सही है[span_7](start_span)[span_7](end_span)। कथन 2 गलत है क्योंकि थार मरुस्थल में वर्षा 150 मिमी से कम दर्ज की जाती है[span_8](start_span)[span_8](end_span)।"
+    },
+    {
+        id: 3,
+        qEn: "According to UNESCO, why are the Western Ghats considered globally significant?",
+        qHi: "यूनेस्को (UNESCO) के अनुसार पश्चिमी घाट को विश्व स्तर पर महत्वपूर्ण क्यों माना जाता है?",
+        optionsEn: [
+            "They classify urban rivers based on economic contribution.",
+            "They influence the Indian Monsoon and are one of the world's top biodiversity hotspots.",
+            "They lie close to the equator and support polar species.",
+            "They form the only volcanic plateau with desert vegetation."
+        ],
+        optionsHi: [
+            "वे शहरी नदियों को आर्थिक योगदान के आधार पर वर्गीकृत करते हैं।",
+            "वे भारतीय मानसून को प्रभावित करते हैं और विश्व के शीर्ष जैव विविधता हॉटस्पॉट में से एक हैं।",
+            "वे भूमध्य रेखा के निकट स्थित हैं और ध्रुवीय प्रजातियों के पोषक हैं।",
+            "वे प्रायद्वीपीय भारत में रेगिस्तानी वनस्पतियों वाला ज्वालामुखी पठार बनाते हैं।"
+        ],
+        ans: 1,
+        expEn: "Western Ghats influence the Indian monsoon and form a major global biodiversity hotspot[span_9](start_span)[span_9](end_span).",
+        expHi: "पश्चिमी घाट भारतीय मानसून को प्रभावित करते हैं तथा प्रमुख जैव विविधता हॉटस्पॉट हैं[span_10](start_span)[span_10](end_span)।"
+    },
+    {
+        id: 4,
+        qEn: "Why does the Tamil Nadu coast remain dry during the South-West Monsoon?",
+        qHi: "दक्षिण-पश्चिमी मानसून के दौरान तमिलनाडु का तट शुष्क क्यों रहता है?",
+        optionsEn: [
+            "Presence of extra-tropical cyclones.",
+            "Rainfall mostly occurs from Arabian Sea tropical cyclones.",
+            "It lies parallel to the Bay of Bengal branch of SW Monsoon and in rain-shadow of Arabian Sea branch.",
+            "ITCZ lies below the Tropic of Capricorn."
+        ],
+        optionsHi: [
+            "शीतकाल के दौरान चक्रवाती स्थितियों की उपस्थिति के कारण।",
+            "अधिकांश वर्षा अरब सागर के चक्रवातों से होती है।",
+            "यह दक्षिण-पश्चिम मानसून की बंगाल की खाड़ी शाखा के समानांतर स्थित है।",
+            "आईटीसीजेड मकर रेखा के नीचे स्थित होता है।"
+        ],
+        ans: 2,
+        expEn: "Tamil Nadu coast is parallel to the Bay of Bengal branch and lies in the rain-shadow area of the Arabian Sea branch[span_11](start_span)[span_11](end_span).",
+        expHi: "तमिलनाडु तट बंगाल की खाड़ी शाखा के समानांतर है और अरब सागर शाखा के वृष्टि छाया क्षेत्र में आता है[span_12](start_span)[span_12](end_span)।"
+    },
+    {
+        id: 5,
+        isStatement: true,
+        qEn: "<b>Assertion (A):</b> Retreating monsoon winds over North India are associated with clear skies and dry weather.<br><b>Reason (R):</b> High pressure system replaces the low pressure system over northern plains during retreating monsoon.",
+        qHi: "<b>अभिकथन (A):</b> उत्तर भारत में लौटते मानसून की हवाएँ शुष्क मौसम और साफ आसमान से जुड़ी होती हैं।<br><b>कारण (R):</b> लौटते मानसून के दौरान, उत्तरी मैदानों पर निम्न वायुदाब क्षेत्र का स्थान उच्च वायुदाब प्रणाली ले लेती है।",
+        optionsEn: [
+            "Both A and R are true, and R is the correct explanation of A.",
+            "Both A and R are true, but R is NOT the correct explanation.",
+            "A is true, but R is false.",
+            "A is false, but R is true."
+        ],
+        optionsHi: [
+            "A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।",
+            "A और R दोनों सत्य हैं, लेकिन R सही व्याख्या नहीं है।",
+            "A सत्य है, लेकिन R असत्य है।",
+            "A असत्य है, लेकिन R सत्य है।"
+        ],
+        ans: 0,
+        expEn: "High pressure development causes clear skies, leading to 'October Heat' during retreating monsoon[span_13](start_span)[span_13](end_span).",
+        expHi: "उच्च वायुदाब प्रणाली बनने से उत्तर भारत में आसमान साफ और शुष्क मौसम हो जाता है[span_14](start_span)[span_14](end_span)।"
+    },
+    {
+        id: 6,
+        isStatement: true,
+        qEn: "Consider the following statements regarding temperature variation in Southern India:<br>1. Due to tropical location, diurnal range of temperature in Southern India is low.<br>2. Due to continental effect, coastal areas have higher annual range of temperature.",
+        qHi: "दक्षिणी भारत में तापमान भिन्नता के संबंध में निम्नलिखित कथनों पर विचार करें:<br>1. उष्णकटिबंधीय क्षेत्र में दक्षिणी भारत की उपस्थिति के कारण, तापमान का दैनिक तापांतर कम होता है।<br>2. महाद्वीपीय प्रभाव के कारण, तटीय क्षेत्रों में तापमान का वार्षिक औसत तापांतर अधिक होता है।",
+        optionsEn: ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"],
+        optionsHi: ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1 और न ही 2"],
+        ans: 0,
+        expEn: "Coastal proximity reduces temperature range (maritime effect), making statement 2 false[span_15](start_span)[span_15](end_span).",
+        expHi: "समुद्र के प्रभाव से तटीय क्षेत्रों में वार्षिक तापांतर कम (अधिक नहीं) होता है[span_16](start_span)[span_16](end_span)।"
+    },
+    {
+        id: 7,
+        qEn: "Chabahar Port is strategically important for India primarily because it provides access to:",
+        qHi: "चाबहार बंदरगाह भारत के लिए मुख्य रूप से रणनीतिक रूप से महत्वपूर्ण है क्योंकि यह किस तक पहुँच प्रदान करता है:",
+        optionsEn: [
+            "Europe via Arctic route",
+            "Central Asia by bypassing Pakistan",
+            "Directly to East Africa",
+            "South China Sea"
+        ],
+        optionsHi: [
+            "आर्कटिक मार्ग के माध्यम से यूरोप",
+            "पाकिस्तान को बायपास करते हुए मध्य एशिया",
+            "सीधे पूर्वी अफ्रीका",
+            "दक्षिण चीन सागर"
+        ],
+        ans: 1,
+        expEn: "Chabahar Port in Iran allows India access to Afghanistan and Central Asia, bypassing Pakistan[span_17](start_span)[span_17](end_span).",
+        expHi: "ईरान का चाबहार बंदरगाह भारत को पाकिस्तान को दरकिनार कर मध्य एशिया तक पहुंच देता है[span_18](start_span)[span_18](end_span)।"
+    },
+    {
+        id: 8,
+        qEn: "What is the primary source of energy driving the Earth's water cycle?",
+        qHi: "पृथ्वी पर जल चक्र को संचालित करने वाली ऊर्जा का मुख्य स्रोत क्या है?",
+        optionsEn: ["Geothermal energy", "Solar energy", "Wind energy", "Oceanic tides"],
+        optionsHi: ["भू-तापीय ऊर्जा", "सौर ऊर्जा", "पवन ऊर्जा", "महासागरीय ज्वार"],
+        ans: 1,
+        expEn: "Solar energy powers evaporation and condensation in the water cycle[span_19](start_span)[span_19](end_span).",
+        expHi: "सूर्य की ऊर्जा वाष्पीकरण और पूरे जल चक्र को संचालित करती है[span_20](start_span)[span_20](end_span)।"
+    },
+    {
+        id: 9,
+        qEn: "The 'Deccan Trap' region of India is primarily composed of which type of rock?",
+        qHi: "भारत का 'दक्कन ट्रैप' क्षेत्र मुख्य रूप से किस प्रकार की चट्टान से बना है?",
+        optionsEn: ["Granite", "Basalt", "Marble", "Sandstone"],
+        optionsHi: ["ग्रेनाइट", "बेसाल्ट", "संगमरमर", "बलुआ पत्थर"],
+        ans: 1,
+        expEn: "Deccan Traps are extrusive igneous flood basalt provinces[span_21](start_span)[span_21](end_span).",
+        expHi: "दक्कन ट्रैप बाह्य आग्नेय चट्टान (बेसाल्ट) का विशाल क्षेत्र है[span_22](start_span)[span_22](end_span)।"
+    },
+    {
+        id: 10,
+        qEn: "Which of the following is the third largest ocean in the world?",
+        qHi: "निम्नलिखित में से कौन सा महासागर विश्व का तीसरा सबसे बड़ा महासागर है?",
+        optionsEn: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"],
+        optionsHi: ["प्रशांत महासागर", "अटलांटिक महासागर", "हिंद महासागर", "आर्कटिक महासागर"],
+        ans: 2,
+        expEn: "1st: Pacific, 2nd: Atlantic, 3rd: Indian Ocean[span_23](start_span)[span_23](end_span).",
+        expHi: "हिंद महासागर विश्व का तीसरा सबसे बड़ा महासागर है[span_24](start_span)[span_24](end_span)।"
+    },
+    {
+        id: 11,
+        qEn: "What is the key characteristic feature of the Bhabar region in the Northern Plains?",
+        qHi: "उत्तरी मैदानों में भावर क्षेत्र की क्या विशेषता है?",
+        optionsEn: [
+            "Dense marshy forest with slow rivers",
+            "Pebble-covered narrow belt at the foot of Shiwaliks where streams disappear",
+            "Dry flat land with calcium deposits",
+            "High mountain ranges"
+        ],
+        optionsHi: [
+            "धीमी नदियां और दलदल",
+            "शिवालिक की तलहटी में 8-16 किमी चौड़ी कंकड़-पत्थर युक्त पट्टी जहाँ नदियां लुप्त हो जाती हैं",
+            "सूखा इलाका",
+            "पहाड़ी इलाका"
+        ],
+        ans: 1,
+        expEn: "Bhabar is an 8-16 km wide porous porous pebble belt south of Shiwaliks where rivers sink underground[span_25](start_span)[span_25](end_span).",
+        expHi: "भावर शिवालिक के दक्षिण में 8-16 किमी चौड़ी कंकड़-पत्थरों की पट्टी है जहाँ नदियाँ लुप्त हो जाती हैं[span_26](start_span)[span_26](end_span)।"
+    },
+    {
+        id: 12,
+        qEn: "Ganga is known by which name at its source where it originates from Gangotri Glacier?",
+        qHi: "गंगा नदी, अपने उद्गम राज्य में, गंगोत्री ग्लेशियर से निकलने पर किस नाम से जानी जाती है?",
+        optionsEn: ["Alaknanda", "Mandakini", "Bhagirathi", "Ganga"],
+        optionsHi: ["अलकनंदा", "मंदाकिनी", "भागीरथी", "गंगा"],
+        ans: 2,
+        expEn: "Ganga originates as Bhagirathi from Gangotri Glacier (Gaumukh)[span_27](start_span)[span_27](end_span).",
+        expHi: "गंगा गंगोत्री ग्लेशियर से भागीरथी के नाम से निकलती है[span_28](start_span)[span_28](end_span)।"
+    },
+    {
+        id: 13,
+        qEn: "Which state is the primary source/origin point of the Godavari River?",
+        qHi: "भारत में कौन सा राज्य गोदावरी नदी का प्राथमिक स्रोत है?",
+        optionsEn: ["Madhya Pradesh", "Maharashtra", "Karnataka", "Telangana"],
+        optionsHi: ["मध्य प्रदेश", "महाराष्ट्र", "कर्नाटक", "तेलंगाना"],
+        ans: 1,
+        expEn: "Godavari originates from Trimbakeshwar in Nashik district of Maharashtra[span_29](start_span)[span_29](end_span).",
+        expHi: "गोदावरी नदी महाराष्ट्र के नासिक जिले में त्र्यंबकेश्वर से निकलती है[span_30](start_span)[span_30](end_span)।"
+    },
+    {
+        id: 14,
+        qEn: "Which of the following east-flowing rivers forms a major delta along the Eastern Coastal Plains?",
+        qHi: "निम्नलिखित में से कौन सी नदी पूर्वी तटीय मैदानों के किनारे डेल्टा बनाती है?",
+        optionsEn: ["Narmada", "Tapti", "Mahi", "Godavari"],
+        optionsHi: ["नर्मदा", "तापी", "माही", "गोदावरी"],
+        ans: 3,
+        expEn: "Godavari flows east into the Bay of Bengal and forms a fertile delta[span_31](start_span)[span_31](end_span). Narmada, Tapti, Mahi are west-flowing[span_32](start_span)[span_32](end_span).",
+        expHi: "गोदावरी पूर्व की ओर बहकर बंगाल की खाड़ी में डेल्टा बनाती है[span_33](start_span)[span_33](end_span)।"
+    },
+    {
+        id: 15,
+        qEn: "As a river approaches the sea, its speed decreases and it splits into numerous channels called:",
+        qHi: "जैसे-जैसे नदी समुद्र के निकट पहुँचती है, बहते पानी की गति कम हो जाती है और नदी कई धाराओं में बँटने लगती है जिन्हें कहते हैं:",
+        optionsEn: ["Distributaries", "Levees", "Floodplains", "Tributaries"],
+        optionsHi: ["वितरिका", "तटबंध", "बाढ़ का मैदान", "सहायक नदी"],
+        ans: 0,
+        expEn: "Channels carrying water away from main stream near delta are called distributaries[span_34](start_span)[span_34](end_span).",
+     ं सत्य हैं, और R, A की सही व्याख्या है", "A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है", "A सत्य है, लेकिन R असत्य है", "A असत्य है, लेकिन R सत्य है"] },
                 answer: 0,
                 expl: "During retreating monsoon, high pressure replaces low pressure causing dry weather and clear skies."
             },
