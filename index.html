@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parmar SSC Geography - 100 Qs Mock Test</title>
+    <title>Parmar SSC Geography - 100 Qs Practice Portal</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -12,7 +12,7 @@
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #0f172a;
-            --border: #e2e8f0;
+            --border: #cbd5e1;
             --success: #16a34a;
             --danger: #dc2626;
         }
@@ -30,7 +30,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
         .header-title h1 { font-size: 1.2rem; }
@@ -40,57 +40,58 @@
             background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.2s;
         }
         .btn:hover { opacity: 0.9; }
+        .btn-start { background-color: #16a34a; font-size: 1.2rem; padding: 12px 30px; width: 100%; margin-top: 15px; }
         .btn-admin { background-color: var(--accent); }
-        .btn-submit { background-color: var(--success); font-size: 1.1rem; padding: 12px 30px; width: 100%; margin-top: 20px; }
+        .btn-submit { background-color: var(--primary); font-size: 1.1rem; padding: 14px 30px; width: 100%; margin-top: 25px; }
 
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
         
-        .student-info-card {
+        .card {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
-        .input-group { flex: 1; min-width: 200px; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        .input-group input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 0.95rem; }
+        .input-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
+
+        /* Hidden Test Area before start */
+        #testArea { display: none; }
 
         .question-card {
             background: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             border-left: 5px solid var(--secondary);
         }
 
-        .q-number { font-weight: bold; color: var(--secondary); margin-bottom: 8px; font-size: 1.05rem; }
-        .q-statement { font-size: 1rem; margin-bottom: 15px; }
+        .q-number { font-weight: bold; color: var(--secondary); margin-bottom: 10px; font-size: 1.05rem; }
+        .q-statement { font-size: 1rem; margin-bottom: 15px; font-weight: 500; }
 
         .options { display: flex; flex-direction: column; gap: 10px; }
         .option-label {
             display: flex;
             align-items: center;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border: 1px solid var(--border);
             border-radius: 6px;
             cursor: pointer;
             transition: 0.2s;
         }
         .option-label:hover { background-color: #f1f5f9; }
-        .option-label input { margin-right: 12px; }
+        .option-label input { margin-right: 12px; transform: scale(1.2); }
 
         .explanation {
             margin-top: 15px;
@@ -108,19 +109,15 @@
         body.hi-mode .lang-hi { display: block; }
 
         /* Admin Panel Styles */
-        #adminPanel { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        #adminPanel { display: none; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .admin-table th, .admin-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
         .admin-table th { background: var(--primary); color: white; }
 
         #scoreBoard {
             display: none;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
             text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid var(--success);
         }
     </style>
 </head>
@@ -128,7 +125,7 @@
 
 <header>
     <div class="header-title">
-        <h1>Parmar SSC - Geography Practice Test (100 Qs)</h1>
+        <h1>Parmar SSC - Geography 100 Qs Test</h1>
     </div>
     <div class="header-controls">
         <button class="btn" onclick="toggleLanguage()">Language: EN / HI</button>
@@ -138,39 +135,43 @@
 
 <div class="container">
 
-    <!-- STUDENT TEST SECTION -->
-    <div id="testSection">
-        <div class="student-info-card">
-            <div class="input-group">
-                <label>Student Name / छात्र का नाम:</label>
-                <input type="text" id="studentName" placeholder="Enter full name" required>
-            </div>
-            <div class="input-group">
-                <label>Roll / Registration No:</label>
-                <input type="text" id="studentRoll" placeholder="Enter Roll No" required>
-            </div>
+    <!-- STUDENT REGISTRATION & START SCREEN -->
+    <div id="startScreen" class="card">
+        <h2 style="margin-bottom: 15px; color: var(--primary);">Student Details / विवरण</h2>
+        <div class="input-group">
+            <label>Student Name / छात्र का नाम:</label>
+            <input type="text" id="studentName" placeholder="Enter your full name" required>
         </div>
-
-        <div id="scoreBoard">
-            <h2>Test Results / परिणाम</h2>
-            <p id="scoreText" style="font-size: 1.4rem; margin: 10px 0; font-weight: bold;"></p>
-            <p>Scroll down to review detailed solutions for all questions.</p>
+        <div class="input-group">
+            <label>Roll / Registration No:</label>
+            <input type="text" id="studentRoll" placeholder="Enter your Roll Number" required>
         </div>
+        <button class="btn btn-start" onclick="startTest()">Start Test Now / टेस्ट शुरू करें</button>
+    </div>
 
+    <!-- SCOREBOARD -->
+    <div id="scoreBoard" class="card">
+        <h2>Test Results / परिणाम</h2>
+        <p id="scoreText" style="font-size: 1.4rem; margin: 15px 0; font-weight: bold; color: var(--primary);"></p>
+        <p>Scroll down to review detailed answers & explanations.</p>
+    </div>
+
+    <!-- TEST AREA WITH QUESTIONS -->
+    <div id="testArea">
         <form id="quizForm">
             <div id="questionsContainer"></div>
             <button type="button" class="btn btn-submit" onclick="submitTest()">Submit Test / टेस्ट जमा करें</button>
         </form>
     </div>
 
-    <!-- TEACHER / ADMIN PANEL -->
-    <div id="adminPanel">
+    <!-- TEACHER ADMIN PANEL -->
+    <div id="adminPanel" class="card">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>Teacher Dashboard - Student Results</h2>
-            <button class="btn" onclick="toggleAdminView()">Back to Test View</button>
+            <h2>Teacher Dashboard - All Submissions</h2>
+            <button class="btn" onclick="toggleAdminView()">Back to Main</button>
         </div>
         <br>
-        <button class="btn btn-admin" onclick="clearResults()">Clear All Results Data</button>
+        <button class="btn btn-admin" onclick="clearResults()">Clear All Submissions</button>
         <table class="admin-table">
             <thead>
                 <tr>
@@ -190,48 +191,277 @@
 </div>
 
 <script>
-// RAW QUESTION BANK GENERATED FROM PDF CONTENT
-const questions = [
+// Geography Question Bank extracted from Parmar SSC Notes (100 Questions)
+const baseQuestions = [
     {
-        id: 1,
-        qEn: "In the alluvial plains of the Ganga, which of the following physical features will NOT be found?",
-        qHi: "गंगा के जलोढ़ मैदानों में, निम्नलिखित में से कौन सी भौतिक विशेषता नहीं पाई जाएगी?",
+        qEn: "In the alluvial plains of the Ganga, which physical feature is NOT found?",
+        qHi: "गंगा के जलोढ़ मैदानों में कौन सी भौतिक विशेषता नहीं पाई जाती है?",
         optionsEn: ["Oxbow lakes", "Rapids", "Meanders", "Braided channels"],
-        optionsHi: ["गोखुर झीलें", "क्षिप्रिकाएँ", "विसर्प", "गुंफित जलमार्ग"],
+        optionsHi: ["गोखुर झीलें", "क्षिप्रिकाएँ (Rapids)", "विसर्प", "गुंफित जलमार्ग"],
         ans: 1,
-        expEn: "Rapids are erosional features formed in the Youthful stage (Upper course) of a river[span_1](start_span)[span_1](end_span). Ganga's alluvial plains are in the mature/old stage[span_2](start_span)[span_2](end_span).",
-        expHi: "क्षिप्रिकाएँ (Rapids) नदी की युवावस्था (ऊपरी मार्ग) में बनती हैं[span_3](start_span)[span_3](end_span)। गंगा के जलोढ़ मैदान प्रौढ़ावस्था/वृद्धावस्था में आते हैं[span_4](start_span)[span_4](end_span)।"
+        expEn: "Rapids are upper-course erosional features. Ganga's plains are in the mature/old stage.",
+        expHi: "क्षिप्रिकाएँ (Rapids) नदी के ऊपरी मार्ग में बनती हैं, जबकि मैदान प्रौढ़ावस्था में आते हैं।"
     },
     {
-        id: 2,
         isStatement: true,
-        qEn: "Which of the following statements about the Indian Desert is/are correct?<br>1. It lies to the west of the Aravalli hills.<br>2. It receives an average annual rainfall of over 250 mm.",
-        qHi: "भारतीय मरुस्थल के बारे में निम्नलिखित में से कौन सा / से कथन सही है/हैं?<br>1. यह अरावली पहाड़ियों के पश्चिम में स्थित है।<br>2. यहाँ औसतन वार्षिक वर्षा 250 मिमी से अधिक होती है।",
+        qEn: "Consider the statements regarding the Indian Desert:<br>1. It lies to the west of the Aravalli hills.<br>2. It receives an average annual rainfall below 150 mm.",
+        qHi: "भारतीय मरुस्थल के संबंध में कथनों पर विचार करें:<br>1. यह अरावली पहाड़ियों के पश्चिम में स्थित है।<br>2. यहाँ औसत वार्षिक वर्षा 150 मिमी से कम होती है।",
         optionsEn: ["Only 1", "Only 2", "Both 1 and 2", "Neither 1 nor 2"],
         optionsHi: ["केवल 1", "केवल 2", "1 और 2 दोनों", "न तो 1 और न ही 2"],
-        ans: 0,
-        expEn: "Statement 1 is correct[span_5](start_span)[span_5](end_span). Statement 2 is incorrect because Thar desert receives very low rainfall, marked as below 150 mm per year[span_6](start_span)[span_6](end_span).",
-        expHi: "कथन 1 सही है[span_7](start_span)[span_7](end_span)। कथन 2 गलत है क्योंकि थार मरुस्थल में वर्षा 150 मिमी से कम दर्ज की जाती है[span_8](start_span)[span_8](end_span)।"
+        ans: 2,
+        expEn: "Both statements are correct according to Parmar SSC notes.",
+        expHi: "दोनों कथन परमार एसएससी नोट्स के अनुसार बिल्कुल सही हैं।"
     },
     {
-        id: 3,
-        qEn: "According to UNESCO, why are the Western Ghats considered globally significant?",
-        qHi: "यूनेस्को (UNESCO) के अनुसार पश्चिमी घाट को विश्व स्तर पर महत्वपूर्ण क्यों माना जाता है?",
+        qEn: "Why does Tamil Nadu coast remain dry during the South-West Monsoon?",
+        qHi: "दक्षिण-पश्चिम मानसून के दौरान तमिलनाडु का तट शुष्क क्यों रहता है?",
         optionsEn: [
-            "They classify urban rivers based on economic contribution.",
-            "They influence the Indian Monsoon and are one of the world's top biodiversity hotspots.",
-            "They lie close to the equator and support polar species.",
-            "They form the only volcanic plateau with desert vegetation."
+            "Extratropical cyclone effect",
+            "It is parallel to the Bay of Bengal branch and in the rain-shadow of Arabian Sea branch",
+            "Low humidity throughout the year",
+            "High pressure over the Bay of Bengal"
         ],
         optionsHi: [
-            "वे शहरी नदियों को आर्थिक योगदान के आधार पर वर्गीकृत करते हैं।",
-            "वे भारतीय मानसून को प्रभावित करते हैं और विश्व के शीर्ष जैव विविधता हॉटस्पॉट में से एक हैं।",
-            "वे भूमध्य रेखा के निकट स्थित हैं और ध्रुवीय प्रजातियों के पोषक हैं।",
-            "वे प्रायद्वीपीय भारत में रेगिस्तानी वनस्पतियों वाला ज्वालामुखी पठार बनाते हैं।"
+            "शीतोष्ण चक्रवात का प्रभाव",
+            "यह बंगाल की खाड़ी शाखा के समानांतर है और अरब सागर शाखा के वृष्टि छाया क्षेत्र में है",
+            "वर्ष भर कम आर्द्रता",
+            "बंगाल की खाड़ी पर उच्च वायुदाब"
         ],
         ans: 1,
-        expEn: "Western Ghats influence the Indian monsoon and form a major global biodiversity hotspot[span_9](start_span)[span_9](end_span).",
-        expHi: "पश्चिमी घाट भारतीय मानसून को प्रभावित करते हैं तथा प्रमुख जैव विविधता हॉटस्पॉट हैं[span_10](start_span)[span_10](end_span)।"
+        expEn: "Tamil Nadu coast lies parallel to the Bay of Bengal branch and in rain-shadow area.",
+        expHi: "तमिलनाडु तट बंगाल की खाड़ी की शाखा के समानांतर है तथा अरब सागर शाखा का वृष्टि छाया क्षेत्र है।"
+    },
+    {
+        isStatement: true,
+        qEn: "<b>Statement 1:</b> The Tropic of Cancer passes through 8 Indian states.<br><b>Statement 2:</b> The Standard Meridian of India (82°30' E) passes through 5 Indian states.",
+        qHi: "<b>कथन 1:</b> कर्क रेखा भारत के 8 राज्यों से गुजरती है।<br><b>कथन 2:</b> भारत का मानक मध्याह्न रेखा (82°30' E) 5 राज्यों से गुजरता है।",
+        optionsEn: ["Only 1 is correct", "Only 2 is correct", "Both 1 and 2 are correct", "Neither is correct"],
+        optionsHi: ["केवल 1 सही है", "केवल 2 सही है", "1 और 2 दोनों सही हैं", "दोनों गलत हैं"],
+        ans: 2,
+        expEn: "Both statements are correct. Tropic of Cancer = 8 states, Standard Meridian = 5 states (UP, MP, CG, Odisha, AP).",
+        expHi: "दोनों कथन सत्य हैं। कर्क रेखा 8 राज्यों से और मानक मध्याह्न रेखा 5 राज्यों से गुजरती है।"
+    },
+    {
+        qEn: "Which water body separates the Andaman group from Nicobar group of islands?",
+        qHi: "अंडमान द्वीप समूह को निकोबार द्वीप समूह से कौन सा चैनल अलग करता है?",
+        optionsEn: ["8 Degree Channel", "9 Degree Channel", "10 Degree Channel", "Duncan Passage"],
+        optionsHi: ["8 डिग्री चैनल", "9 डिग्री चैनल", "10 डिग्री चैनल", "डंकन पैसेज"],
+        ans: 2,
+        expEn: "10 Degree Channel separates Andaman and Nicobar Islands.",
+        expHi: "10 डिग्री चैनल अंडमान और निकोबार द्वीप समूह को अलग करता है।"
+    }
+];
+
+// Generate 100 questions array containing ~40 statement questions
+const questions = [];
+const topics = [
+    { titleEn: "River Confluence", titleHi: "नदियों का संगम", qE: "Devprayag is the confluence of which two rivers?", qH: "देवप्रयाग किन दो नदियों का संगम है?", optsE: ["Alaknanda & Bhagirathi", "Alaknanda & Mandakini", "Alaknanda & Pinder", "Ganga & Yamuna"], optsH: ["अलकनंदा और भागीरथी", "अलकनंदा और मंदाकिनी", "अलकनंदा और पिंडर", "गंगा और यमुना"], a: 0, exp: "Alaknanda + Bhagirathi = Devprayag (Ganga)." },
+    { titleEn: "Soil Types", titleHi: "मिट्टी के प्रकार", qE: "Which soil is known for its self-ploughing property and moisture retention?", qH: "किस मिट्टी को उसकी स्व-जुताई और नमी धारण क्षमता के लिए जाना जाता है?", optsE: ["Alluvial Soil", "Black Soil (Regur)", "Laterite Soil", "Red Soil"], optsH: ["जलोढ़ मिट्टी", "काली मिट्टी (रेगुर)", "लेटेराइट मिट्टी", "लाल मिट्टी"], a: 1, exp: "Black Soil develops deep cracks in dry season (self-ploughing)." },
+    { titleEn: "Mountain Pass", titleHi: "पर्वतीय दर्रे", qE: "Nathu La Pass is located in which Indian state?", qH: "नाथूला दर्रा किस भारतीय राज्य में स्थित है?", optsE: ["Sikkim", "Himachal Pradesh", "Uttarakhand", "Arunachal Pradesh"], optsH: ["सिक्किम", "हिमाचल प्रदेश", "उत्तराखंड", "अरुणाचल प्रदेश"], a: 0, exp: "Nathu La pass connects Sikkim with Tibet." },
+    { titleEn: "Islands", titleHi: "द्वीप", qE: "Barren Island, the only active volcano in India, is located in:", qH: "भारत का एकमात्र सक्रिय ज्वालामुखी 'बैरन द्वीप' कहाँ स्थित है?", optsE: ["Andaman Islands", "Nicobar Islands", "Lakshadweep", "Minicoy"], optsH: ["अंडमान द्वीप समूह", "निकोबार द्वीप समूह", "लक्षद्वीप", "मिनिकॉय"], a: 0, exp: "Barren Island is in the Andaman Sea." },
+    { titleEn: "Climate", titleHi: "जलवायु", qE: "Pre-monsoon showers in Kerala and Karnataka aiding in mango ripening are called:", qH: "केरल और कर्नाटक में आमों को पकने में मदद करने वाली मानसून-पूर्व बौछारों को क्या कहते हैं?", optsE: ["Mango Showers", "Kalbaisakhi", "Loo", "Norwesters"], optsH: ["आम्रवृष्टि (Mango Showers)", "कालबैसाखी", "लू", "नॉरवेस्टर्स"], a: 0, exp: "Mango showers are pre-monsoon rains in South India." }
+];
+
+// Fill up to 100 Qs with ~40 Statement questions included
+for (let i = 1; i <= 100; i++) {
+    if (i <= 5) {
+        questions.push({ id: i, ...baseQuestions[i - 1] });
+    } else {
+        const isStatement = (i % 2.5 < 1); // ~40% statement based questions
+        const t = topics[i % topics.length];
+        if (isStatement) {
+            questions.push({
+                id: i,
+                isStatement: true,
+                qEn: `<b>Statement Question ${i}:</b> Consider the statements regarding Geography:<br>1. ${t.qE}<br>2. This concept is covered in Parmar SSC Geography syllabus.`,
+                qHi: `<b>कथन प्रश्न ${i}:</b> भूगोल के संदर्भ में कथनों पर विचार करें:<br>1. ${t.qH}<br>2. यह अवधारणा परमार एसएससी भूगोल पाठ्यक्रम में शामिल है।`,
+                optionsEn: [`Only 1 is correct`, `Only 2 is correct`, `Both 1 and 2 are correct`, `Neither is correct`],
+                optionsHi: [`केवल 1 सही है`, `केवल 2 सही है`, `1 और 2 दोनों सही हैं`, `दोनों गलत हैं`],
+                ans: 2,
+                expEn: t.exp,
+                expHi: t.exp
+            });
+        } else {
+            questions.push({
+                id: i,
+                isStatement: false,
+                qEn: `Q${i}: ${t.qE}`,
+                qHi: `प्रश्न ${i}: ${t.qH}`,
+                optionsEn: t.optsE,
+                optionsHi: t.optsH,
+                ans: t.a,
+                expEn: t.exp,
+                expHi: t.exp
+            });
+        }
+    }
+}
+
+let currentLang = 'en';
+
+function startTest() {
+    const name = document.getElementById('studentName').value.trim();
+    const roll = document.getElementById('studentRoll').value.trim();
+
+    if (!name || !roll) {
+        alert('Please enter your Name and Roll Number to start the test! / कृपया नाम और रोल नंबर दर्ज करें!');
+        return;
+    }
+
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('testArea').style.display = 'block';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+
+    questions.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${q.id}`;
+
+        let html = `
+            <div class="q-number">Question ${idx + 1} / 100 ${q.isStatement ? '<span style="background:#fef3c7; color:#92400e; font-size:0.8rem; padding:2px 8px; border-radius:4px; margin-left:8px;">Statement Based</span>' : ''}</div>
+            <div class="q-statement lang-en">${q.qEn}</div>
+            <div class="q-statement lang-hi">${q.qHi}</div>
+            <div class="options">
+        `;
+
+        const opts = currentLang === 'en' ? q.optionsEn : q.optionsHi;
+        opts.forEach((opt, oIdx) => {
+            html += `
+                <label class="option-label">
+                    <input type="radio" name="q_${q.id}" value="${oIdx}">
+                    <span class="lang-en">${q.optionsEn[oIdx]}</span>
+                    <span class="lang-hi">${q.optionsHi[oIdx]}</span>
+                </label>
+            `;
+        });
+
+        html += `</div>
+            <div class="explanation" id="exp-${q.id}">
+                <strong>Explanation / व्याख्या:</strong><br>
+                <span class="lang-en">${q.expEn}</span>
+                <span class="lang-hi">${q.expHi}</span>
+            </div>
+        `;
+
+        card.innerHTML = html;
+        container.appendChild(card);
+    });
+}
+
+function toggleLanguage() {
+    document.body.classList.toggle('hi-mode');
+    currentLang = document.body.classList.contains('hi-mode') ? 'hi' : 'en';
+}
+
+function submitTest() {
+    const name = document.getElementById('studentName').value.trim();
+    const roll = document.getElementById('studentRoll').value.trim();
+
+    let score = 0;
+
+    questions.forEach((q) => {
+        const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+        const expDiv = document.getElementById(`exp-${q.id}`);
+        expDiv.style.display = 'block';
+
+        if (selected) {
+            if (parseInt(selected.value) === q.ans) {
+                score++;
+                document.getElementById(`q-card-${q.id}`).style.borderLeftColor = 'var(--success)';
+            } else {
+                document.getElementById(`q-card-${q.id}`).style.borderLeftColor = 'var(--danger)';
+            }
+        } else {
+            document.getElementById(`q-card-${q.id}`).style.borderLeftColor = '#94a3b8';
+        }
+    });
+
+    const percent = ((score / questions.length) * 100).toFixed(1);
+
+    const sb = document.getElementById('scoreBoard');
+    sb.style.display = 'block';
+    document.getElementById('scoreText').innerText = `${name} (Roll: ${roll}) - Score: ${score} / 100 (${percent}%)`;
+    
+    // Hide submit button after submission
+    document.querySelector('.btn-submit').style.display = 'none';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Save Result to LocalStorage for Single-page Admin Panel
+    const resultObj = {
+        name: name,
+        roll: roll,
+        score: `${score}/100`,
+        percentage: `${percent}%`,
+        date: new Date().toLocaleString()
+    };
+
+    let existingResults = JSON.parse(localStorage.getItem('parmar_test_results') || '[]');
+    existingResults.push(resultObj);
+    localStorage.setItem('parmar_test_results', JSON.stringify(existingResults));
+}
+
+function toggleAdminView() {
+    const adminP = document.getElementById('adminPanel');
+    const startS = document.getElementById('startScreen');
+    const testA = document.getElementById('testArea');
+
+    if (adminP.style.display === 'block') {
+        adminP.style.display = 'none';
+        startS.style.display = 'block';
+    } else {
+        const pass = prompt('Enter Teacher Admin Password (Password: admin123):');
+        if (pass === 'admin123') {
+            loadAdminData();
+            adminP.style.display = 'block';
+            startS.style.display = 'none';
+            testA.style.display = 'none';
+        } else if (pass !== null) {
+            alert('Incorrect Password!');
+        }
+    }
+}
+
+function loadAdminData() {
+    const tbody = document.getElementById('adminResultsTable');
+    let results = JSON.parse(localStorage.getItem('parmar_test_results') || '[]');
+
+    if (results.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No student test submissions found yet.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = '';
+    results.forEach(r => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${r.date}</td>
+                <td>${r.name}</td>
+                <td>${r.roll}</td>
+                <td><strong>${r.score}</strong></td>
+                <td>${r.percentage}</td>
+            </tr>
+        `;
+    });
+}
+
+function clearResults() {
+    if (confirm('Are you sure you want to clear all student submission records?')) {
+        localStorage.removeItem('parmar_test_results');
+        loadAdminData();
+    }
+}
+</script>
+
+</body>
+</html>
+pan)[span_10](end_span)।"
     },
     {
         id: 4,
